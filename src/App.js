@@ -18,9 +18,15 @@ function App() {
 
   const getCheeseCutterCost = () => Math.round(cheeseCutterBaseCost * Math.pow(cheeseCutterMultiplier, cheeseCutterLevel));
   const getDairyCowCost = () => Math.round(dairyCowBaseCost * Math.pow(dairyCowMultiplier, dairyCowLevel));
+  const getCheesePerSecond = () => dairyCowLevel * 0.1;
 
   const handleClick = () => {
     setCheeseCount(cheeseCount + cheesePerClick);
+    const cheeseImg = document.querySelector('.cheese-image');
+    cheeseImg.classList.add('bounce');
+    setTimeout(() => {
+      cheeseImg.classList.remove('bounce');
+    }, 100);
   };
 
   const buyCheeseCutter = () => {
@@ -87,7 +93,10 @@ function App() {
           </button>
         </div>
         <h1 className="cheese-title">Cheese Clicker</h1>
-        <p className="cheese-per-click">Cheese per Click: {cheesePerClick}</p>
+        <div className="cheese-stats">
+          <p className="cheese-per-click">Cheese per Click: {cheesePerClick}</p>
+          <p className="cheese-per-second">Cheese per Second: {getCheesePerSecond().toFixed(1)}</p>
+        </div>
         <div className="cheese-container" onClick={handleClick}>
         {popupMessage && <div className="popup-message">{popupMessage}</div>}
           <img src={cheeseImage} alt="Cheese" className="cheese-image" />

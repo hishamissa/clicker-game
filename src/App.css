@@ -24,7 +24,15 @@
   margin-top: -30px;
 }
 
-.cheese-per-click {
+.cheese-stats {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  gap: 20px;
+}
+
+.cheese-per-click, .cheese-per-second {
   font-family: 'Chewy';
   font-size: 1.3rem;
   color: #6b4f1e;
@@ -47,6 +55,23 @@
 .cheese-image {
   width: 300px;
   height: 300px;
+  transition: transform 0.2s ease;
+}
+
+.cheese-image.bounce {
+  animation: bounce 0.1s ease;
+}
+
+@keyframes bounce {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 .cheese-count {
@@ -59,6 +84,7 @@
     -1px 1px 0 #000,
     1px 1px 0 #000;
   margin-right: 22px;
+  margin-top: 10px;
 }
 
 .upgrades {
