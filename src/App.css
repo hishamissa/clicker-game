@@ -11,21 +11,22 @@
   justify-content: flex-start;
   font-size: calc(10px + 2vmin);
   color: #6b4f1e;
-  padding-top: 20px;
+  padding: 0px;
 }
 
 .cheese-title {
   font-family: 'Chewy', cursive;
   font-size: 7rem;
-  margin: 20px;
+  margin: 0px;
   text-shadow: 3px 3px #dc533b;
   color: #fda744;
   margin-bottom: 10px;
+  margin-top: -30px;
 }
 
 .cheese-per-click {
   font-family: 'Chewy';
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   color: #6b4f1e;
   margin-bottom: 50px;
   margin-top: -40px;
@@ -35,6 +36,7 @@
   position: relative;
   cursor: pointer;
   margin: 20px;
+  margin-top: 10px;
   transition: transform 0.1s ease;
 }
 
@@ -48,8 +50,15 @@
 }
 
 .cheese-count {
-  font-size: 2rem;
-  color: #6b4f1e;
+  font-family: 'Chewy', cursive;
+  font-size: 3rem;
+  color: #ffbb1c;
+  text-shadow: 
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
+  margin-right: 22px;
 }
 
 .upgrades {
@@ -96,6 +105,54 @@
   10% { opacity: 1; }
   90% { opacity: 1; }
   100% { opacity: 0; }
+}
+
+.toggle-button {
+  position: relative;
+  top: 20px;
+  left: -650px;
+  background-color: #ffa500;
+  color: white;
+  font-size: 1rem;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, left 0.3s ease;
+  z-index: 1000;
+}
+
+.toggle-button:hover {
+  background-color: #ff8c00;
+}
+
+.button-visible {
+  left: -402px;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -250px;
+  height: 100%;
+  width: 250px;
+  background-color: #f7e7b4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+  transition: left 0.3s ease;
+  z-index: 999;
+}
+
+.sidebar.visible {
+  left: 0;
+}
+
+.sidebar h2 {
+  margin-top: 0;
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
