@@ -1,26 +1,55 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
+import cheeseImage from './cheese.png'; // Import the cheese image
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [cheeseCount, setCheeseCount] = useState(0);
+  const [cheesePerClick, setCheesePerClick] = useState(1);
+  const [cheeseCutterBought, setCheeseCutterBought] = useState(false);
+  const [popupMessage, setPopupMessage] = useState('');
 
   const handleClick = () => {
-    setCount(count + 1);
+    setCheeseCount(cheeseCount + cheesePerClick);
   };
 
+  const buyCheeseCutter = () => {
+    if (cheeseCount >= 10 && !cheeseCutterBought) {
+      setCheeseCount(cheeseCount - 10);
+      setCheesePerClick(cheesePerClick + 1);
+      setCheeseCutterBought(true);
+      setPopupMessage('+1 Cheese per Click!');
+    }
+  };
+
+  useEffect(() => {
+    if (popupMessage) {
+      const timer = setTimeout(() => setPopupMessage(''), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [popupMessage]);
+
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <h1 className="text-4xl font-bold mb-4">Clicker Game</h1>
-      <button
-        className="px-6 py-2 text-lg bg-blue-500 text-white rounded hover:bg-blue-600"
-        onClick={handleClick}
-      >
-        Click me!
-      </button>
-      <p className="mt-4 text-2xl">Count: {count}</p>
+    <div className="App">
+      <header className="App-header">
+        <h1 className="cheese-title">Cheese Clicker</h1>
+        <p className="cheese-per-click">Cheese per Click: {cheesePerClick}</p>
+        <div className="cheese-container" onClick={handleClick}>
+        {popupMessage && <div className="popup-message">{popupMessage}</div>}
+          <img src={cheeseImage} alt="Cheese" className="cheese-image" />
+        </div>
+        <p className="cheese-count">Cheese: {cheeseCount}</p>
+        <div className="upgrades">
+          <button
+            className="upgrade-button"
+            onClick={buyCheeseCutter}
+            disabled={cheeseCount < 10 || cheeseCutterBought}
+          >
+            Buy Cheese Cutter (10 Cheese)
+          </button>
+        </div>
+      </header>
     </div>
   );
 }
 
 export default App;
-

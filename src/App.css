@@ -2,27 +2,103 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
 .App-header {
-  background-color: #282c34;
+  background-color: #f7e7b4;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: #6b4f1e;
+  padding-top: 20px;
 }
+
+.cheese-title {
+  font-family: 'Chewy', cursive;
+  font-size: 7rem;
+  margin: 20px;
+  text-shadow: 3px 3px #dc533b;
+  color: #fda744;
+  margin-bottom: 10px;
+}
+
+.cheese-per-click {
+  font-family: 'Chewy';
+  font-size: 1.5rem;
+  color: #6b4f1e;
+  margin-bottom: 50px;
+  margin-top: -40px;
+}
+
+.cheese-container {
+  position: relative;
+  cursor: pointer;
+  margin: 20px;
+  transition: transform 0.1s ease;
+}
+
+.cheese-container:hover {
+  transform: scale(1.1);
+}
+
+.cheese-image {
+  width: 300px;
+  height: 300px;
+}
+
+.cheese-count {
+  font-size: 2rem;
+  color: #6b4f1e;
+}
+
+.upgrades {
+  margin-top: 20px;
+}
+
+.upgrade-button {
+  background-color: #ffa500;
+  color: white;
+  font-size: 1rem;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.upgrade-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.upgrade-button:hover:not(:disabled) {
+  background-color: #ff8c00;
+}
+
+.popup-message {
+  position: absolute;
+  top: -45px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #ffa500;
+  padding: 5px 10px;
+  border-radius: 3px;
+  font-size: 1rem;
+  white-space: nowrap;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  animation: fadeInOut 3s ease-in-out;
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 .App-link {
   color: #61dafb;
