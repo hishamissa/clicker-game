@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/clicker-game/static/css/main.b9badf27.css",
-    "main.js": "/clicker-game/static/js/main.bef303d1.js",
+    "main.css": "/clicker-game/static/css/main.9124891b.css",
+    "main.js": "/clicker-game/static/js/main.1ac1b865.js",
     "static/media/cheese.png": "/clicker-game/static/media/cheese.2ccaea3a8209074106fe.png",
     "index.html": "/clicker-game/index.html",
-    "main.b9badf27.css.map": "/clicker-game/static/css/main.b9badf27.css.map",
-    "main.bef303d1.js.map": "/clicker-game/static/js/main.bef303d1.js.map"
+    "main.9124891b.css.map": "/clicker-game/static/css/main.9124891b.css.map",
+    "main.1ac1b865.js.map": "/clicker-game/static/js/main.1ac1b865.js.map"
   },
   "entrypoints": [
-    "static/css/main.b9badf27.css",
-    "static/js/main.bef303d1.js"
+    "static/css/main.9124891b.css",
+    "static/js/main.1ac1b865.js"
   ]
 }
