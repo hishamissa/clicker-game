@@ -182,18 +182,19 @@ function App() {
         </div>
         {/* Title of the game */}
         <h1 className="cheese-title text-8xl sm:text-8xl md:text-8xl lg:text-8xl xl:text-8xl">Cheese Clicker</h1>
+        {/* Cheese container/image */}
+        <div className="cheese-container mt-4" onClick={handleClick}>
+          <img src={cheeseImage} alt="Cheese" className="cheese-image w-64 h-64 sm:w-64 sm:h-64 md:w-64 m:h-64 lg:w-64 lg:h-64 xl:w-64 xl:h-64" />
+        </div>
+        {/* Cheese count */}
+        <p className="cheese-count text-4xl sm:text-5xl md:text-5xl lg:text-5xl mt-4">🧀 {cheeseCount.toFixed(1)}</p>
         {/* Cheese stats */}
         <div className="cheese-stats flex items-center text-xl sm:text-2xl md:text-2xl lg:text-2xl xl:text-2xl">
           <p className="cheese-per-click flex items-center text-xl sm:text-xl md:text-2xl lg:text-2xl xl:text-2xl">CHeeSE PER CLICK: {cheesePerClick}</p>
           <p className="cheese-per-second ml-0 md:ml-5 flex items-center text-xl sm:text-xl md:text-2xl lg:text-2xl xl:text-2xl">CHeeSe PeR SeCoND: {getCheesePerSecond().toFixed(1)}</p>
         </div>
-        {/* Cheese container/image */}
-        <div className="cheese-container mt-4" onClick={handleClick}>
+        {/* Popup message */}
         {popupMessage && <div key={popupKey} className="popup-message">{popupMessage}</div>}
-          <img src={cheeseImage} alt="Cheese" className="cheese-image w-64 h-64 sm:w-64 sm:h-64 md:w-64 m:h-64 lg:w-64 lg:h-64 xl:w-64 xl:h-64" />
-        </div>
-        {/* Cheese count */}
-        <p className="cheese-count text-4xl sm:text-5xl md:text-5xl lg:text-5xl mt-4">🧀 {cheeseCount.toFixed(1)}</p>
       </header>
     </div>
   );

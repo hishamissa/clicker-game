@@ -40,7 +40,8 @@
   justify-content: center; 
   align-items: center;
   margin-bottom: 5px;
-  margin-top: 25px;
+  margin-top: 53px;
+  margin-right: 36px;
   gap: 20px; /* Add space between the elements */
 }
 
@@ -62,7 +63,7 @@
   position: relative; /* Allows the image to be positioned relative to the container */
   cursor: pointer; /* Change the cursor to a pointer when hovering over the image */
   margin: 20px;
-  margin-top: 0px;
+  margin-top: 10px;
   left: -25px;
   transition: transform 0.1s ease; /* Add a smooth transition when the image is hovered over */
   user-select: none; 
@@ -153,14 +154,13 @@
   font-family: "cheese-upgrades", cursive; /* Custom font */
   text-shadow: 1px 1px #dc533b; 
   color: #fda744;
-  position: absolute; 
-  top: -45px; /* Position the message above the upgrade button */
-  left: 3%;
-  transform: translateX(0%);
+  position: relative; 
   background-color: transparent;
   padding: 5px 10px;
   border-radius: 1px;
   font-size: 1.25rem;
+  margin-top: -50px;
+  margin-left: -45px;
   white-space: nowrap; /* Prevents the text from wrapping */
   animation: flyIn 3s ease-in-out; /* Add a fly-in animation */
 }
