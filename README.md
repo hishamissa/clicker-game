@@ -1,6 +1,6 @@
 # Cheese Clicker
 
-[Click Here](https://hishamissa.github.io/clicker-game/ "Play Cheese Clicker on GitHub Pages!"){:target="_blank"} to play Cheese Clicker! 
+<a href="https://hishamissa.github.io/clicker-game/" target="_blank" title="Play Cheese Clicker on GitHub Pages!">Click Here</a> to play Cheese Clicker!
 
 Cheese Clicker is a fun and interactive incremental (clicker) game that I'm developing as a personal project. The game revolves around producing and collecting cheese by clicking on a cheese icon. As you progress, you can purchase upgrades to increase your cheese production rate and earn cheese passively.
 
