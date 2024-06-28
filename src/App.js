@@ -94,16 +94,16 @@ function App() {
             Buy Dairy Cow ({getDairyCowCost()} Cheese)
           </button>
         </div>
-        <h1 className="cheese-title text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl">Cheese Clicker</h1>
-        <div className="cheese-stats flex items-center text-lg sm:text-xl md:text-2xl lg:text-3xl">
-          <p className="cheese-per-click flex items-center text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl">Cheese per Click: {cheesePerClick}</p>
-          <p className="cheese-per-second ml-0 md:ml-4 flex items-center text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl">Cheese per Second: {getCheesePerSecond().toFixed(1)}</p>
+        <h1 className="cheese-title text-7xl sm:text-8xl md:text-8xl lg:text-8xl xl:text-8xl">Cheese Clicker</h1>
+        <div className="cheese-stats flex items-center text-xl sm:text-2xl md:text-2xl lg:text-2xl xl:text-2xl">
+          <p className="cheese-per-click flex items-center text-xl sm:text-2xl md:text-2xl lg:text-2xl xl:text-2xl">Cheese per Click: {cheesePerClick}</p>
+          <p className="cheese-per-second ml-0 md:ml-5 flex items-center text-xl sm:text-2xl md:text-2xl lg:text-2xl xl:text-2xl">Cheese per Second: {getCheesePerSecond().toFixed(1)}</p>
         </div>
         <div className="cheese-container mt-4" onClick={handleClick}>
         {popupMessage && <div className="popup-message">{popupMessage}</div>}
-          <img src={cheeseImage} alt="Cheese" className="cheese-image w-32 sm:w-40 md:w-48 lg:w-56 xl:w-64" />
+          <img src={cheeseImage} alt="Cheese" className="cheese-image w-64 h-64 sm:w-64 sm:h-64 md:w-64 m:h-64 lg:w-64 lg:h-64 xl:w-64 xl:h-64" />
         </div>
-        <p className="cheese-count text-2xl sm:text-3xl md:text-4xl lg:text-5xl mt-4">🧀 = {cheeseCount.toFixed(1)}</p>
+        <p className="cheese-count text-4xl sm:text-5xl md:text-5xl lg:text-5xl mt-4">🧀 = {cheeseCount.toFixed(1)}</p>
       </header>
     </div>
   );

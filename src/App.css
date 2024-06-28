@@ -53,8 +53,6 @@
   margin-top: 0px;
   transition: transform 0.1s ease;
   user-select: none;
-  justify-content: center;
-  align-items: center;
 }
 
 .cheese-container:hover {
@@ -62,8 +60,8 @@
 }
 
 .cheese-image {
-  /* width: 300px;
-  height: 300px; */
+  max-width: 1000px;
+  max-height: 1000px; 
   transition: transform 0.2s ease;
 }
 
