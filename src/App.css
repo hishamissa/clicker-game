@@ -20,7 +20,7 @@
 }
 
 .cheese-title {
-  font-family: 'Chewy', cursive;
+  font-family: 'Cheese';
   margin: 10px;
   margin-top: 80px;
   text-shadow: 3px 3px #dc533b;
@@ -40,10 +40,15 @@
 }
 
 .cheese-per-click, .cheese-per-second {
-  font-family: 'Chewy';
-  color: #6b4f1e;
+  font-family: 'Cheese-Small';
+  color: rgb(178, 112, 20);
   margin-bottom: 50px;
   margin-top: -40px;
+  text-shadow: 
+  -0.5px -0.5px 0 #000,
+  0.5px -0.5px 0 #000,
+  -0.5px 0.5px 0 #000,
+  0.5px 0.5px 0 #000;
 }
 
 .cheese-container {
@@ -51,6 +56,7 @@
   cursor: pointer;
   margin: 20px;
   margin-top: 0px;
+  left: -25px;
   transition: transform 0.1s ease;
   user-select: none;
 }
@@ -90,13 +96,19 @@
     1px -1px 0 #000,
     -1px 1px 0 #000,
     1px 1px 0 #000;
-  margin-right: 22px;
-  margin-top: 10px;
+  margin-right: 60px;
+  margin-top: 15px;
   justify-content: center;
   align-items: center;
 }
 
 .upgrades {
+  font-family: "cheese-upgrades";
+  font-size: 2.3rem;
+  text-shadow: 3px 3px #dc533b;
+  color: #fda744;
+  justify-content: center;
+  align-items: center;
   margin-top: 20px;
 }
 
@@ -104,11 +116,11 @@
   background-color: #ffa500;
   color: white;
   font-size: 1rem;
-  padding: 10px 20px;
+  padding: 5px 15px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  margin: 10px;
+  margin: 5px;
   transition: background-color 0.3s ease;
 }
 
@@ -122,17 +134,19 @@
 }
 
 .popup-message {
+  font-family: "cheese-upgrades", cursive;
+  text-shadow: 1px 1px #dc533b;
+  color: #fda744;
   position: absolute;
   top: -45px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: #ffa500;
+  left: 3%;
+  transform: translateX(0%);
+  background-color: transparent;
   padding: 5px 10px;
-  border-radius: 3px;
-  font-size: 1rem;
+  border-radius: 1px;
+  font-size: 1.25rem;
   white-space: nowrap;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  animation: fadeInOut 3s ease-in-out;
+  animation: flyIn 3s ease-in-out;
 }
 
 @keyframes fadeInOut {
@@ -140,6 +154,25 @@
   10% { opacity: 1; }
   90% { opacity: 1; }
   100% { opacity: 0; }
+}
+
+@keyframes flyIn {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  10% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  90% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
 }
 
 .toggle-button {
@@ -187,7 +220,7 @@
   width: 30vw;
   max-width: 250px;
   background-color: #f7e7b4;
-  padding: 10px;
+  padding: 12px;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
   transition: left 0.5s ease;
   z-index: 999;

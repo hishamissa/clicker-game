@@ -4,6 +4,27 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "Cheese";
+  src: local("cheese-font"),
+    url("./fonts/cheese-font.ttf") format("truetype");
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: "Cheese-Small";
+  src: local("cheese-small"),
+    url("./fonts/cheese-stats2.otf") format("opentype");
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: "Cheese-Upgrades";
+  src: local("cheese-upgrades"),
+    url("./fonts/New Cheese.otf") format("opentype");
+  font-weight: normal;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
