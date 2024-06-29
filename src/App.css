@@ -5,6 +5,16 @@
   padding: 0px;
 }
 
+.App.container {
+  display: flex;
+  transition: transform 0.8s ease;
+}
+
+.sidebar-open .App-content {
+  transform: translateX(100px);
+  transition: transform 0.8s ease;
+}
+
 * {
   user-select: none; /* Prevents selection of all elements */
 }
@@ -25,12 +35,14 @@
 /* Styling for the title */
 .cheese-title {
   font-family: 'Cheese'; /* Custom font */
-  margin: 10px; 
-  margin-top: 80px;
+  font-size: 7vw;
+  margin: 0px; 
+  margin-top: 50px;
   text-shadow: 3px 3px #dc533b; /* Adds a shadow to the text */
   color: #fda744;
   justify-content: center; /* Center the text */
   align-items: center; 
+  white-space: nowrap;
 }
 
 /* Styling for the stats display */
@@ -48,6 +60,7 @@
 /* Styling for the cheese per click and cheese per second stats */
 .cheese-per-click, .cheese-per-second {
   font-family: 'Cheese-Small'; /* Custom font */
+  font-size: 1.8vw;
   color: rgb(178, 112, 20); 
   margin-bottom: 50px; 
   margin-top: -40px;
@@ -63,7 +76,7 @@
   position: relative; /* Allows the image to be positioned relative to the container */
   cursor: pointer; /* Change the cursor to a pointer when hovering over the image */
   margin: 20px;
-  margin-top: 10px;
+  margin-top: 0px;
   left: -25px;
   transition: transform 0.1s ease; /* Add a smooth transition when the image is hovered over */
   user-select: none; 
@@ -76,8 +89,8 @@
 
 /* Add a smooth transition when the image is clicked */
 .cheese-image {
-  max-width: 1000px;
-  max-height: 1000px; 
+  width: 22vw;
+  height: 22vw; 
   transition: transform 0.2s ease;
 }
 
@@ -102,6 +115,7 @@
 /* Element to handle the total cheese count display */
 .cheese-count {
   font-family: 'Chewy', cursive; 
+  font-size: 3.5vw;
   color: #ffbb1c;
   text-shadow: 
     -1px -1px 0 #000,
@@ -120,6 +134,7 @@
   font-size: 2.3rem;
   text-shadow: 3px 3px #dc533b;
   color: #fda744;
+  margin-left: 15px;
   justify-content: center;
   align-items: center;
   margin-top: 20px;
@@ -158,7 +173,7 @@
   background-color: transparent;
   padding: 5px 10px;
   border-radius: 1px;
-  font-size: 1.25rem;
+  font-size: 2vw;
   margin-top: -50px;
   margin-left: -45px;
   white-space: nowrap; /* Prevents the text from wrapping */
@@ -196,19 +211,24 @@
 /* Element to handle button to open the upgrades sidebar */
 .toggle-button {
   background-color: transparent;
+  width: 10vw;
+  height: auto;
+  left: 15px;
+  top: 5px;
   padding: 0;
   border: none;
   cursor: pointer;
-  justify-content: center;
-  align-items: center;
+  justify-content: left;
+  align-items: left;
   display: flex;
-  transition: background-color 0.3s ease, left 0.5s ease;
+  transition: left 0.5s ease, transform 0.5s ease;
+  z-index: 1000; /* Ensure the button is on top of all other elements */
 }
 
 /* Position the button in the top-left corner when sidebar is HIDDEN */
 .left-60 {
   top: 5px;
-  left: 270px;
+  left: 170px;
   transition: left 0.5s ease; /* Ensure the transition matches the sidebar's transition */
 }
 
@@ -239,19 +259,19 @@
 .sidebar {
   position: fixed; /* Fix the sidebar to the screen */
   top: 0;
-  left: -250px;
+  left: 0px;
   height: 100%;
-  width: 30vw; /* Set the width of the sidebar */
-  max-width: 250px;
+  width: 250px; /* Set the width of the sidebar */
   background-color: #f7e7b4;
   padding: 12px;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
-  transition: left 0.5s ease;
+  transition: transform 0.5s ease;
   z-index: 999; /* Ensure the sidebar is on top of all other elements */
+  transform: translateX(-100%)
 }
 
 .sidebar.visible {
-  left: 0;
+  transform: translateX(0);
 }
 
 .sidebar h2 {

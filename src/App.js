@@ -148,18 +148,9 @@ function App() {
   /* Return the JSX */
   return (
     /* Main App container */
-    <div className="App min-h-screen flex flex-col items-center justify-center p-4">
-      {/* Header section */}
-      <header className="App-header w-full">
-        {/* Sidebar (purchases) button */}
-        <button className={`toggle-button fixed top-5 ${sideBarVisible ? 'left-60' : 'left-5'} z-50`} 
-                /* Toggle the sidebar visibility when clicked */
-                onClick={toggleSideBar}>
-                {/* Upgrades icon that reveals sidebar */}
-                <img src={upgradesIcon} alt="Upgrades" className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-18 lg:h-18 xl:w-20 xl:h-20" />
-        </button>
-        {/* Sidebar displaying upgrade options */}
-        <div className ={`sidebar ${sideBarVisible ? 'visible' : ''}`}>
+    <div className={`App-container ${sideBarVisible ? 'sidebar-open' : ''}`}>
+      {/* Sidebar displaying upgrade options */}
+      <div className ={`sidebar ${sideBarVisible ? 'visible' : ''}`}>
           <h2 className = "upgrades">Upgrades</h2>
           <button
             className="upgrade-button text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl"
@@ -180,22 +171,33 @@ function App() {
             Buy Dairy Cow ({getDairyCowCost()} Cheese)
           </button>
         </div>
-        {/* Title of the game */}
-        <h1 className="cheese-title text-8xl sm:text-8xl md:text-8xl lg:text-8xl xl:text-8xl">Cheese Clicker</h1>
-        {/* Cheese container/image */}
-        <div className="cheese-container mt-4" onClick={handleClick}>
-          <img src={cheeseImage} alt="Cheese" className="cheese-image w-64 h-64 sm:w-64 sm:h-64 md:w-64 m:h-64 lg:w-64 lg:h-64 xl:w-64 xl:h-64" />
+        <div className="App-content">
+          {/* Header section */}
+          <header className="App-header w-full">
+            {/* Sidebar (purchases) button */}
+            <button className={`toggle-button fixed top-5 ${sideBarVisible ? 'left-60' : 'left-5'} z-50`} 
+                    /* Toggle the sidebar visibility when clicked */
+                    onClick={toggleSideBar}>
+                    {/* Upgrades icon that reveals sidebar */}
+                    <img src={upgradesIcon} alt="Upgrades" className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-18 lg:h-18 xl:w-20 xl:h-20" />
+            </button>
+            {/* Title of the game */}
+            <h1 className="cheese-title">Cheese Clicker</h1>
+            {/* Cheese container/image */}
+            <div className="cheese-container mt-4" onClick={handleClick}>
+              <img src={cheeseImage} alt="Cheese" className="cheese-image w-64 h-64 sm:w-64 sm:h-64 md:w-64 m:h-64 lg:w-64 lg:h-64 xl:w-64 xl:h-64" />
+            </div>
+            {/* Cheese count */}
+            <p className="cheese-count text-4xl sm:text-5xl md:text-5xl lg:text-5xl mt-4">🧀 {cheeseCount.toFixed(1)}</p>
+            {/* Cheese stats */}
+            <div className="cheese-stats flex items-center text-xl sm:text-2xl md:text-2xl lg:text-2xl xl:text-2xl">
+              <p className="cheese-per-click flex items-center text-xl sm:text-xl md:text-2xl lg:text-2xl xl:text-2xl">CHeeSE PER CLICK: {cheesePerClick}</p>
+              <p className="cheese-per-second ml-0 md:ml-5 flex items-center text-xl sm:text-xl md:text-2xl lg:text-2xl xl:text-2xl">CHeeSe PeR SeCoND: {getCheesePerSecond().toFixed(1)}</p>
+            </div>
+            {/* Popup message */}
+            {popupMessage && <div key={popupKey} className="popup-message">{popupMessage}</div>}
+          </header>
         </div>
-        {/* Cheese count */}
-        <p className="cheese-count text-4xl sm:text-5xl md:text-5xl lg:text-5xl mt-4">🧀 {cheeseCount.toFixed(1)}</p>
-        {/* Cheese stats */}
-        <div className="cheese-stats flex items-center text-xl sm:text-2xl md:text-2xl lg:text-2xl xl:text-2xl">
-          <p className="cheese-per-click flex items-center text-xl sm:text-xl md:text-2xl lg:text-2xl xl:text-2xl">CHeeSE PER CLICK: {cheesePerClick}</p>
-          <p className="cheese-per-second ml-0 md:ml-5 flex items-center text-xl sm:text-xl md:text-2xl lg:text-2xl xl:text-2xl">CHeeSe PeR SeCoND: {getCheesePerSecond().toFixed(1)}</p>
-        </div>
-        {/* Popup message */}
-        {popupMessage && <div key={popupKey} className="popup-message">{popupMessage}</div>}
-      </header>
     </div>
   );
 }
