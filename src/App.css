@@ -263,6 +263,10 @@
   z-index: 1000; /* Ensure the button is on top of all other elements */
 }
 
+.toggle-button img.highlight {
+  filter: drop-shadow(0 0 20px rgb(143, 255, 44));
+}
+
 /* Position the button in the top-left corner when sidebar is HIDDEN */
 .left-60 {
   top: 5px;

@@ -318,6 +318,25 @@ function App() {
     setSideBarVisible(!sideBarVisible);
   };
 
+  const isUpgradeAvailable = () => {
+    const upgradeCosts = [
+      getCheeseCutterCost(),
+      getDairyCowCost(),
+      getCheeseMakerCost(),
+      getCheeseFactoryCost(),
+      getArtisanCheeseMakerCost(),
+      getCheeseShopCost(),
+      getCheeseExporterCost(),
+      getCheeseResearchLabCost(),
+      getCheeseCorporationCost(),
+      getGlobalCheeseEnterpriseCost(),
+      getGalacticCheeseConglomerateCost()
+    ];
+    return upgradeCosts.some(cost => cheeseCount >= cost);
+  };
+
+  const shouldHightlight = !sideBarVisible && isUpgradeAvailable();
+
   /* UseEffect hook to clear the popup message after 3 seconds */
   useEffect(() => {
     if (popupMessage) {
@@ -433,7 +452,7 @@ function App() {
             disabled={cheeseCount < getCheeseResearchLabCost()}
           >
             <div className="upgrade-details">
-              <span className="upgrade-name">Research Lab</span>
+              <span className="upgrade-name">Cheese Research</span>
               <span className="upgrade-level">Level {cheeseResearchLabLevel}</span>
               <span className="upgrade-cost">{formatNumber(getCheeseResearchLabCost())} 🧀</span>
             </div>
@@ -446,7 +465,7 @@ function App() {
             disabled={cheeseCount < getCheeseCorporationCost()}
           >
             <div className="upgrade-details">
-              <span className="upgrade-name">Cheese Corp</span>
+              <span className="upgrade-name">Cheese Inc.</span>
               <span className="upgrade-level">Level {cheeseCorporationLevel}</span>
               <span className="upgrade-cost">{formatNumber(getCheeseCorporationCost())} 🧀</span>
             </div>
@@ -459,7 +478,7 @@ function App() {
             disabled={cheeseCount < getGlobalCheeseEnterpriseCost()}
           >
             <div className="upgrade-details">
-              <span className="upgrade-name">Global Cheese</span>
+              <span className="upgrade-name">Cheese Enterprise</span>
               <span className="upgrade-level">Level {globalCheeseEnterpriseLevel}</span>
               <span className="upgrade-cost">{formatNumber(getGlobalCheeseEnterpriseCost())} 🧀</span>
             </div>
@@ -486,7 +505,7 @@ function App() {
                     /* Toggle the sidebar visibility when clicked */
                     onClick={toggleSideBar}>
                     {/* Upgrades icon that reveals sidebar */}
-                    <img src={upgradesIcon} alt="Upgrades" className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-18 lg:h-18 xl:w-20 xl:h-20" />
+                    <img src={upgradesIcon} alt="Upgrades" className={`w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-18 lg:h-18 xl:w-20 xl:h-20 ${shouldHightlight ? 'highlight' : ''}`}/>
             </button>
             {/* Title of the game */}
             <h1 className="cheese-title">Cheese Clicker</h1>
