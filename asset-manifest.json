@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/clicker-game/static/css/main.ee25e087.css",
-    "main.js": "/clicker-game/static/js/main.ed361e11.js",
+    "main.css": "/clicker-game/static/css/main.d1b83ab8.css",
+    "main.js": "/clicker-game/static/js/main.5d938e78.js",
     "static/media/music.mp3": "/clicker-game/static/media/music.2b3ac0cb9450c4fe2297.mp3",
     "static/media/upgrade.mp3": "/clicker-game/static/media/upgrade.c109ec79b89bd22697b4.mp3",
     "static/media/cheese-stats2.otf": "/clicker-game/static/media/cheese-stats2.f5957bf883620f560ab3.otf",
@@ -12,11 +12,11 @@
     "static/media/bite.mp3": "/clicker-game/static/media/bite.e7ad2a801d4d2b7b95bc.mp3",
     "static/media/click.mp3": "/clicker-game/static/media/click.8a763dc94dd8642a3eed.mp3",
     "index.html": "/clicker-game/index.html",
-    "main.ee25e087.css.map": "/clicker-game/static/css/main.ee25e087.css.map",
-    "main.ed361e11.js.map": "/clicker-game/static/js/main.ed361e11.js.map"
+    "main.d1b83ab8.css.map": "/clicker-game/static/css/main.d1b83ab8.css.map",
+    "main.5d938e78.js.map": "/clicker-game/static/js/main.5d938e78.js.map"
   },
   "entrypoints": [
-    "static/css/main.ee25e087.css",
-    "static/js/main.ed361e11.js"
+    "static/css/main.d1b83ab8.css",
+    "static/js/main.5d938e78.js"
   ]
 }
