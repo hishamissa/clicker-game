@@ -260,6 +260,7 @@
   align-items: left;
   display: flex;
   transition: left 0.5s ease, transform 0.5s ease;
+  transition: background-color 0.3s ease;
   z-index: 1000; /* Ensure the button is on top of all other elements */
 }
 
@@ -297,6 +298,31 @@
   transform: scale(1.1);
 }
 
+.button-column {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.save-button {
+  background-color: transparent;
+  color: white;
+  padding: 5px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+  transition: left 0.5s ease, transform 0.5s ease;
+  margin-top: 100px;
+  margin-left: 7px;
+}
+
+.save-button:hover {
+  background-color: transparent;
+  transform: scale(1.2);
+}
+
 /* Element to handle the sidebar */
 .sidebar {
   position: fixed; /* Fix the sidebar to the screen */
@@ -309,7 +335,7 @@
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
   transition: transform 0.5s ease;
   z-index: 999; /* Ensure the sidebar is on top of all other elements */
-  transform: translateX(-100%)
+  transform: translateX(-100%);
 }
 
 .sidebar.visible {

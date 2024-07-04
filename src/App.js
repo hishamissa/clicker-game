@@ -8,6 +8,7 @@ import backgroundMusic from './sounds/music.mp3';
 import clickSound from './sounds/click.mp3'; 
 import bite from './sounds/bite.mp3'; 
 import upgradeSound from './sounds/upgrade.mp3'; 
+import saveIcon from './assets/diskette.png'; // Import the save icon
 
 /* Main App component */
 function App() {
@@ -38,31 +39,22 @@ function App() {
   /* Cheese per Second upgrade settings */
   const dairyCowBaseCost = 100;
   const dairyCowMultiplier = 1.15;
-
   const cheeseMakerBaseCost = 500;
   const cheeseMakerMultiplier = 1.25;
-
   const cheeseFactoryBaseCost = 2000;
   const cheeseFactoryMultiplier = 1.25;
-
   const artisanCheeseMakerBaseCost = 5000;
   const artisanCheeseMakerMultiplier = 1.35;
-
   const cheeseShopBaseCost = 10000;
   const cheeseShopMultiplier = 1.35;
-
   const cheeseExporterBaseCost = 20000;
   const cheeseExporterMultiplier = 1.4;
-
   const cheeseResearchLabBaseCost = 50000;
   const cheeseResearchLabMultiplier = 1.45;
-
   const cheeseCorporationBaseCost = 100000;
   const cheeseCorporationMultiplier = 1.5;
-
   const globalCheeseEnterpriseBaseCost = 2000000;
   const globalCheeseEnterpriseMultiplier = 1.55;
-
   const galacticCheeseConglomerateBaseCost = 5000000;
   const galacticCheeseConglomerateMultiplier = 1.60;
 
@@ -296,6 +288,49 @@ function App() {
     }
   };
 
+  const saveGame = () => {
+    const gameState = {
+      cheeseCount,
+      cheesePerClick,
+      cheeseCutterLevel,
+      dairyCowLevel,
+      cheeseMakerLevel,
+      cheeseFactoryLevel,
+      artisanCheeseMakerLevel,
+      cheeseShopLevel,
+      cheeseExporterLevel,
+      cheeseResearchLabLevel,
+      cheeseCorporationLevel,
+      globalCheeseEnterpriseLevel,
+      galacticCheeseConglomerateLevel
+    };
+    localStorage.setItem('cheeseClickerGameState', JSON.stringify(gameState));
+    alert('Game saved successfully!');
+  };
+
+  const loadGame = () => {
+    const savedGameState = JSON.parse(localStorage.getItem('cheeseClickerGameState'));
+    if (savedGameState) {
+      setCheeseCount(savedGameState.cheeseCount);
+      setCheesePerClick(savedGameState.cheesePerClick);
+      setCheeseCutterLevel(savedGameState.cheeseCutterLevel);
+      setDairyCowLevel(savedGameState.dairyCowLevel);
+      setCheeseMakerLevel(savedGameState.cheeseMakerLevel);
+      setCheeseFactoryLevel(savedGameState.cheeseFactoryLevel);
+      setArtisanCheeseMakerLevel(savedGameState.artisanCheeseMakerLevel);
+      setCheeseShopLevel(savedGameState.cheeseShopLevel);
+      setCheeseExporterLevel(savedGameState.cheeseExporterLevel);
+      setCheeseResearchLabLevel(savedGameState.cheeseResearchLabLevel);
+      setCheeseCorporationLevel(savedGameState.cheeseCorporationLevel);
+      setGlobalCheeseEnterpriseLevel(savedGameState.globalCheeseEnterpriseLevel);
+      setGalacticCheeseConglomerateLevel(savedGameState.galacticCheeseConglomerateLevel);
+    }
+  };
+
+  useEffect(() => {
+    loadGame();
+  }, []);
+
   /* UseEffect hook to generate cheese per second */
   useEffect(() => {
     let interval;
@@ -501,12 +536,18 @@ function App() {
           {/* Header section */}
           <header className="App-header w-full">
             {/* Sidebar (purchases) button */}
+            <div className="button-column fixed top-5 left-5 z-50 flex flex-col">
             <button className={`toggle-button fixed top-5 ${sideBarVisible ? 'left-60' : 'left-5'} z-50`} 
                     /* Toggle the sidebar visibility when clicked */
                     onClick={toggleSideBar}>
                     {/* Upgrades icon that reveals sidebar */}
                     <img src={upgradesIcon} alt="Upgrades" className={`w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-18 lg:h-18 xl:w-20 xl:h-20 ${shouldHightlight ? 'highlight' : ''}`}/>
             </button>
+            <button className={`save-button fixed top-5 ${sideBarVisible ? 'left-60' : 'left-5'} z-50`} 
+                    onClick={saveGame}>
+                    <img src={saveIcon} alt="Save" className={`w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 xl:w-18 xl:h-18`}/>
+            </button>
+            </div>
             {/* Title of the game */}
             <h1 className="cheese-title">Cheese Clicker</h1>
             {/* Cheese container/image */}
