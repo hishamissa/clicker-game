@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import './App.css'; 
 /* Import the images */
 import cheeseImage from './assets/cheese.png'; // Import the cheese image
-import upgradesIcon from './assets/upgrades.ico'; // Import the upgrades icon
+import upgradesIcon from './assets/cart.png'; // Import the upgrades icon
 /* Import the audio files */
 import backgroundMusic from './sounds/music.mp3';
 import clickSound from './sounds/click.mp3'; 
@@ -15,6 +15,15 @@ function App() {
   const [cheesePerClick, setCheesePerClick] = useState(1); // Initialize the cheese per click state
   const [cheeseCutterLevel, setCheeseCutterLevel] = useState(0);
   const [dairyCowLevel, setDairyCowLevel] = useState(0);
+  const [cheeseMakerLevel, setCheeseMakerLevel] = useState(0);
+  const [cheeseFactoryLevel, setCheeseFactoryLevel] = useState(0);
+  const [artisanCheeseMakerLevel, setArtisanCheeseMakerLevel] = useState(0);
+  const [cheeseShopLevel, setCheeseShopLevel] = useState(0);
+  const [cheeseExporterLevel, setCheeseExporterLevel] = useState(0);
+  const [cheeseResearchLabLevel, setCheeseResearchLabLevel] = useState(0);
+  const [cheeseCorporationLevel, setCheeseCorporationLevel] = useState(0);
+  const [globalCheeseEnterpriseLevel, setGlobalCheeseEnterpriseLevel] = useState(0);
+  const [galacticCheeseConglomerateLevel, setGalacticCheeseConglomerateLevel] = useState(0);
   const [popupMessage, setPopupMessage] = useState('');
   const [popupKey, setPopupKey] = useState(0); // Used to force re-render the popup message
   const [sideBarVisible, setSideBarVisible] = useState(false); 
@@ -22,20 +31,72 @@ function App() {
   const [clickCount, setClickCount] = useState(0); 
   const [nextBiteInterval, setNextBiteInterval] = useState(getRandomInterval());
 
-  /* Cheese cutter upgrade settings */
+  /* Cheese per Click upgrade settings */
   const cheeseCutterBaseCost = 10;
   const cheeseCutterMultiplier = 1.15;
 
-  /* Dairy cow upgrade settings */
+  /* Cheese per Second upgrade settings */
   const dairyCowBaseCost = 100;
   const dairyCowMultiplier = 1.15;
+
+  const cheeseMakerBaseCost = 500;
+  const cheeseMakerMultiplier = 1.25;
+
+  const cheeseFactoryBaseCost = 2000;
+  const cheeseFactoryMultiplier = 1.25;
+
+  const artisanCheeseMakerBaseCost = 5000;
+  const artisanCheeseMakerMultiplier = 1.35;
+
+  const cheeseShopBaseCost = 10000;
+  const cheeseShopMultiplier = 1.35;
+
+  const cheeseExporterBaseCost = 20000;
+  const cheeseExporterMultiplier = 1.4;
+
+  const cheeseResearchLabBaseCost = 50000;
+  const cheeseResearchLabMultiplier = 1.45;
+
+  const cheeseCorporationBaseCost = 100000;
+  const cheeseCorporationMultiplier = 1.5;
+
+  const globalCheeseEnterpriseBaseCost = 2000000;
+  const globalCheeseEnterpriseMultiplier = 1.55;
+
+  const galacticCheeseConglomerateBaseCost = 5000000;
+  const galacticCheeseConglomerateMultiplier = 1.60;
+
+  const formatNumber = (number) => {
+    if (number >= 1000000000) {
+      return (number / 1000000000).toFixed(1) + 'B'; //for billions 
+    } else if (number >= 1000000) {
+      return (number / 1000000).toFixed(1) + 'M'; //for millions
+    } else if (number >= 1000) {
+      return (number / 1000).toFixed(1) + 'K'; //for thousands
+    } else {
+      return number;
+    }
+  };
 
   /* Function to calculate the scaled cost of the upgrades */
   const getCheeseCutterCost = () => Math.round(cheeseCutterBaseCost * Math.pow(cheeseCutterMultiplier, cheeseCutterLevel));
   const getDairyCowCost = () => Math.round(dairyCowBaseCost * Math.pow(dairyCowMultiplier, dairyCowLevel)); 
+  const getCheeseMakerCost = () => Math.round(cheeseMakerBaseCost * Math.pow(cheeseMakerMultiplier, cheeseMakerLevel));
+  const getCheeseFactoryCost = () => Math.round(cheeseFactoryBaseCost * Math.pow(cheeseFactoryMultiplier, cheeseFactoryLevel));
+  const getArtisanCheeseMakerCost = () => Math.round(artisanCheeseMakerBaseCost * Math.pow(artisanCheeseMakerMultiplier, artisanCheeseMakerLevel));
+  const getCheeseShopCost = () => Math.round(cheeseShopBaseCost * Math.pow(cheeseShopMultiplier, cheeseShopLevel));
+  const getCheeseExporterCost = () => Math.round(cheeseExporterBaseCost * Math.pow(cheeseExporterMultiplier, cheeseExporterLevel));
+  const getCheeseResearchLabCost = () => Math.round(cheeseResearchLabBaseCost * Math.pow(cheeseResearchLabMultiplier, cheeseResearchLabLevel));
+  const getCheeseCorporationCost = () => Math.round(cheeseCorporationBaseCost * Math.pow(cheeseCorporationMultiplier, cheeseCorporationLevel));
+  const getGlobalCheeseEnterpriseCost = () => Math.round(globalCheeseEnterpriseBaseCost * Math.pow(globalCheeseEnterpriseMultiplier, globalCheeseEnterpriseLevel));
+  const getGalacticCheeseConglomerateCost = () => Math.round(galacticCheeseConglomerateBaseCost * Math.pow(galacticCheeseConglomerateMultiplier, galacticCheeseConglomerateLevel));
 
   /* Function to calculate the total cheese per second */
-  const getCheesePerSecond = () => dairyCowLevel * 0.1;
+  const getCheesePerSecond = () => (dairyCowLevel * 0.1) + (cheeseMakerLevel * 0.5) + 
+                                  (cheeseFactoryLevel * 2) + (artisanCheeseMakerLevel * 5) + 
+                                  (cheeseShopLevel * 10) + (cheeseExporterLevel * 20) + 
+                                  (cheeseResearchLabLevel * 50) + (cheeseCorporationLevel * 100) + 
+                                  (globalCheeseEnterpriseLevel * 200) + (galacticCheeseConglomerateLevel * 500);
 
   /* Audio settings */
   const music = new Audio(backgroundMusic); 
@@ -118,13 +179,134 @@ function App() {
     }
   };
 
+  /* Function to buy the cheese maker upgrade */
+  const buyCheeseMaker = () => {
+    const cost = getCheeseMakerCost();
+    if (cheeseCount >= cost) {
+      setCheeseCount(cheeseCount - cost);
+      setCheeseMakerLevel(cheeseMakerLevel + 1);
+      setPopupMessage('+0.5 CHEESE PER SECOND!');
+      setPopupKey(Date.now());
+      upgradeAudio.currentTime = 0.5;
+      upgradeAudio.play();
+    }
+  };
+
+  /* Function to buy the cheese factory upgrade */
+  const buyCheeseFactory = () => {
+    const cost = getCheeseFactoryCost();
+    if (cheeseCount >= cost) {
+      setCheeseCount(cheeseCount - cost);
+      setCheeseFactoryLevel(cheeseFactoryLevel + 1);
+      setPopupMessage('+2 CHEESE PER SECOND!');
+      setPopupKey(Date.now());
+      upgradeAudio.currentTime = 0.5;
+      upgradeAudio.play();
+    }
+  };
+
+  /* Function to buy the artisan cheese maker upgrade */
+  const buyArtisanCheeseMaker = () => {
+    const cost = getArtisanCheeseMakerCost();
+    if (cheeseCount >= cost) {
+      setCheeseCount(cheeseCount - cost);
+      setArtisanCheeseMakerLevel(artisanCheeseMakerLevel + 1);
+      setPopupMessage('+5 CHEESE PER SECOND!');
+      setPopupKey(Date.now());
+      upgradeAudio.currentTime = 0.5;
+      upgradeAudio.play();
+    }
+  };
+
+  /* Function to buy the cheese shop upgrade */
+  const buyCheeseShop = () => {
+    const cost = getCheeseShopCost();
+    if (cheeseCount >= cost) {
+      setCheeseCount(cheeseCount - cost);
+      setCheeseShopLevel(cheeseShopLevel + 1);
+      setPopupMessage('+10 CHEESE PER SECOND!');
+      setPopupKey(Date.now());
+      upgradeAudio.currentTime = 0.5;
+      upgradeAudio.play();
+    }
+  };
+
+  /* Function to buy the cheese exporter upgrade */
+  const buyCheeseExporter = () => {
+    const cost = getCheeseExporterCost();
+    if (cheeseCount >= cost) {
+      setCheeseCount(cheeseCount - cost);
+      setCheeseExporterLevel(cheeseExporterLevel + 1);
+      setPopupMessage('+20 CHEESE PER SECOND!');
+      setPopupKey(Date.now());
+      upgradeAudio.currentTime = 0.5;
+      upgradeAudio.play();
+    }
+  };
+
+  /* Function to buy the cheese research lab upgrade */
+  const buyCheeseResearchLab = () => {
+    const cost = getCheeseResearchLabCost();
+    if (cheeseCount >= cost) {
+      setCheeseCount(cheeseCount - cost);
+      setCheeseResearchLabLevel(cheeseResearchLabLevel + 1);
+      setPopupMessage('+50 CHEESE PER SECOND!');
+      setPopupKey(Date.now());
+      upgradeAudio.currentTime = 0.5;
+      upgradeAudio.play();
+    }
+  };
+
+  /* Function to buy the cheese corporation upgrade */
+  const buyCheeseCorporation = () => {
+    const cost = getCheeseCorporationCost();
+    if (cheeseCount >= cost) {
+      setCheeseCount(cheeseCount - cost);
+      setCheeseCorporationLevel(cheeseCorporationLevel + 1);
+      setPopupMessage('+100 CHEESE PER SECOND!');
+      setPopupKey(Date.now());
+      upgradeAudio.currentTime = 0.5;
+      upgradeAudio.play();
+    }
+  };
+
+  /* Function to buy the global cheese enterprise upgrade */
+  const buyGlobalCheeseEnterprise = () => {
+    const cost = getGlobalCheeseEnterpriseCost();
+    if (cheeseCount >= cost) {
+      setCheeseCount(cheeseCount - cost);
+      setGlobalCheeseEnterpriseLevel(globalCheeseEnterpriseLevel + 1);
+      setPopupMessage('+200 CHEESE PER SECOND!');
+      setPopupKey(Date.now());
+      upgradeAudio.currentTime = 0.5;
+      upgradeAudio.play();
+    }
+  };
+
+  /* Function to buy the galactic cheese conglomerate upgrade */
+  const buyGalacticCheeseConglomerate = () => {
+    const cost = getGalacticCheeseConglomerateCost();
+    if (cheeseCount >= cost) {
+      setCheeseCount(cheeseCount - cost);
+      setGalacticCheeseConglomerateLevel(galacticCheeseConglomerateLevel + 1);
+      setPopupMessage('+500 CHEESE PER SECOND!');
+      setPopupKey(Date.now());
+      upgradeAudio.currentTime = 0.5;
+      upgradeAudio.play();
+    }
+  };
+
   /* UseEffect hook to generate cheese per second */
   useEffect(() => {
     let interval;
     if (dairyCowLevel > 0) {
       interval = setInterval(() => {
         /* Generate 0.1 cheese per second for each dairy cow */
-        setCheeseCount((prevCheeseCount) => prevCheeseCount + 0.1 * dairyCowLevel);
+        setCheeseCount((prevCheeseCount) => prevCheeseCount + (0.1 * dairyCowLevel) + (0.5 * cheeseMakerLevel) + 
+                                                              (2 * cheeseFactoryLevel) + (5 * artisanCheeseMakerLevel) + 
+                                                              (10 * cheeseShopLevel) + (20 * cheeseExporterLevel) + 
+                                                              (50 * cheeseResearchLabLevel) + (100 * cheeseCorporationLevel) + 
+                                                              (200 * globalCheeseEnterpriseLevel) + (500 * galacticCheeseConglomerateLevel));
       }, 1000); // Generate 0.1 cheese per second
     }
     /* Clear the interval when the component is unmounted */
@@ -159,7 +341,11 @@ function App() {
             /* Disable the button if the player doesn't have enough cheese */
             disabled={cheeseCount < getCheeseCutterCost()}
           >
-            Buy Cheese Cutter ({getCheeseCutterCost()} Cheese)
+            <div className="upgrade-details">
+              <span className="upgrade-name">Cheese Cutter</span>
+              <span className="upgrade-level">Level {cheeseCutterLevel}</span>
+              <span className="upgrade-cost">{getCheeseCutterCost()} 🧀</span>
+            </div>
           </button>
           <button
             className="upgrade-button text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl"
@@ -168,7 +354,128 @@ function App() {
             /* Disable the button if the player doesn't have enough cheese */
             disabled={cheeseCount < getDairyCowCost()}
           >
-            Buy Dairy Cow ({getDairyCowCost()} Cheese)
+            <div className="upgrade-details">
+              <span className="upgrade-name">Dairy Cow</span>
+              <span className="upgrade-level">Level {dairyCowLevel}</span>
+              <span className="upgrade-cost">{getDairyCowCost()} 🧀</span>
+            </div>
+          </button>
+          <button
+            className="upgrade-button text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl"
+            /* Buy the cheese maker upgrade when clicked */
+            onClick={buyCheeseMaker}
+            /* Disable the button if the player doesn't have enough cheese */
+            disabled={cheeseCount < getCheeseMakerCost()}
+          >
+            <div className="upgrade-details">
+              <span className="upgrade-name">Cheese Maker</span>
+              <span className="upgrade-level">Level {cheeseMakerLevel}</span>
+              <span className="upgrade-cost">{getCheeseMakerCost()} 🧀</span>
+            </div>
+          </button>
+          <button
+            className="upgrade-button text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl"
+            /* Buy the cheese factory upgrade when clicked */
+            onClick={buyCheeseFactory}
+            /* Disable the button if the player doesn't have enough cheese */
+            disabled={cheeseCount < getCheeseFactoryCost()}
+          >
+            <div className="upgrade-details">
+              <span className="upgrade-name">Cheese Factory</span>
+              <span className="upgrade-level">Level {cheeseFactoryLevel}</span>
+              <span className="upgrade-cost">{formatNumber(getCheeseFactoryCost())} 🧀</span>
+            </div>
+          </button>
+          <button
+            className="upgrade-button text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl"
+            /* Buy the artisan cheese maker upgrade when clicked */
+            onClick={buyArtisanCheeseMaker}
+            /* Disable the button if the player doesn't have enough cheese */
+            disabled={cheeseCount < getArtisanCheeseMakerCost()}
+          >
+            <div className="upgrade-details">
+              <span className="upgrade-name">Artisan Maker</span>
+              <span className="upgrade-level">Level {artisanCheeseMakerLevel}</span>
+              <span className="upgrade-cost">{formatNumber(getArtisanCheeseMakerCost())} 🧀</span>
+            </div>
+          </button>
+          <button
+            className="upgrade-button text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl"
+            /* Buy the cheese shop upgrade when clicked */
+            onClick={buyCheeseShop}
+            /* Disable the button if the player doesn't have enough cheese */
+            disabled={cheeseCount < getCheeseShopCost()}
+          >
+            <div className="upgrade-details">
+              <span className="upgrade-name">Cheese Shop</span>
+              <span className="upgrade-level">Level {cheeseShopLevel}</span>
+              <span className="upgrade-cost">{formatNumber(getCheeseShopCost())} 🧀</span>
+            </div>
+          </button>  
+          <button
+            className="upgrade-button text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl"
+            /* Buy the cheese exporter upgrade when clicked */
+            onClick={buyCheeseExporter}
+            /* Disable the button if the player doesn't have enough cheese */
+            disabled={cheeseCount < getCheeseExporterCost()}
+          >
+            <div className="upgrade-details">
+              <span className="upgrade-name">Cheese Exporter</span>
+              <span className="upgrade-level">Level {cheeseExporterLevel}</span>
+              <span className="upgrade-cost">{formatNumber(getCheeseExporterCost())} 🧀</span>
+            </div>
+          </button>
+          <button
+            className="upgrade-button text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl"
+            /* Buy the cheese research lab upgrade when clicked */
+            onClick={buyCheeseResearchLab}
+            /* Disable the button if the player doesn't have enough cheese */
+            disabled={cheeseCount < getCheeseResearchLabCost()}
+          >
+            <div className="upgrade-details">
+              <span className="upgrade-name">Research Lab</span>
+              <span className="upgrade-level">Level {cheeseResearchLabLevel}</span>
+              <span className="upgrade-cost">{formatNumber(getCheeseResearchLabCost())} 🧀</span>
+            </div>
+          </button>
+          <button
+            className="upgrade-button text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl"
+            /* Buy the cheese corporation upgrade when clicked */
+            onClick={buyCheeseCorporation}
+            /* Disable the button if the player doesn't have enough cheese */
+            disabled={cheeseCount < getCheeseCorporationCost()}
+          >
+            <div className="upgrade-details">
+              <span className="upgrade-name">Cheese Corp</span>
+              <span className="upgrade-level">Level {cheeseCorporationLevel}</span>
+              <span className="upgrade-cost">{formatNumber(getCheeseCorporationCost())} 🧀</span>
+            </div>
+          </button>
+          <button
+            className="upgrade-button text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl"
+            /* Buy the global cheese enterprise upgrade when clicked */
+            onClick={buyGlobalCheeseEnterprise}
+            /* Disable the button if the player doesn't have enough cheese */
+            disabled={cheeseCount < getGlobalCheeseEnterpriseCost()}
+          >
+            <div className="upgrade-details">
+              <span className="upgrade-name">Global Cheese</span>
+              <span className="upgrade-level">Level {globalCheeseEnterpriseLevel}</span>
+              <span className="upgrade-cost">{formatNumber(getGlobalCheeseEnterpriseCost())} 🧀</span>
+            </div>
+          </button>
+          <button
+            className="upgrade-button text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl"
+            /* Buy the galactic cheese conglomerate upgrade when clicked */
+            onClick={buyGalacticCheeseConglomerate}
+            /* Disable the button if the player doesn't have enough cheese */
+            disabled={cheeseCount < getGalacticCheeseConglomerateCost()}
+          >
+            <div className="upgrade-details">
+              <span className="upgrade-name">Galactic Cheese</span>
+              <span className="upgrade-level">Level {galacticCheeseConglomerateLevel}</span>
+              <span className="upgrade-cost">{formatNumber(getGalacticCheeseConglomerateCost())} 🧀</span>
+            </div>
           </button>
         </div>
         <div className="App-content">

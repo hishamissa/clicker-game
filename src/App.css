@@ -145,12 +145,17 @@
   background-color: #ffa500;
   color: white;
   font-size: 1rem;
-  padding: 5px 15px;
+  padding: 4px 15px;
+  padding-bottom: 15px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   margin: 5px;
+  display: flex;
+  justify-content: space-between;
   transition: background-color 0.3s ease; /* Add a smooth transition when hovered over */
+  position: relative;
+  min-width: 220px;
 }
 
 /* Disable the button when the user does not have enough cheese */
@@ -162,6 +167,39 @@
 /* Change the background color of the button when hovered over */
 .upgrade-button:hover:not(:disabled) {
   background-color: #ff8c00;
+}
+
+/* Styling for the upgrade button details */
+.upgrade-details {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  position: relative;
+}
+
+.upgrade-name {
+  flex: 1;
+  text-align: left;
+  font-size: 0.9rem;
+}
+
+.upgrade-cost {
+  flex: 0;
+  text-align: right;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  bottom: -4px;
+  position: relative;
+  font-size: 0.85rem;
+}
+
+.upgrade-level {
+  position: absolute;
+  bottom: -16px;
+  text-align: left;
+  font-size: 0.58rem;
+  color: #fff;
 }
 
 /* Element to handle the popup message displaying which upgrade you recieved */
