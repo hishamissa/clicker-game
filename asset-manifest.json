@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/clicker-game/static/css/main.c519dd16.css",
-    "main.js": "/clicker-game/static/js/main.496d188b.js",
+    "main.css": "/clicker-game/static/css/main.ee25e087.css",
+    "main.js": "/clicker-game/static/js/main.ed361e11.js",
     "static/media/music.mp3": "/clicker-game/static/media/music.2b3ac0cb9450c4fe2297.mp3",
     "static/media/upgrade.mp3": "/clicker-game/static/media/upgrade.c109ec79b89bd22697b4.mp3",
     "static/media/cheese-stats2.otf": "/clicker-game/static/media/cheese-stats2.f5957bf883620f560ab3.otf",
     "static/media/cheese.png": "/clicker-game/static/media/cheese.2ccaea3a8209074106fe.png",
     "static/media/cheese-font.ttf": "/clicker-game/static/media/cheese-font.101ef100c42cf961ca8f.ttf",
     "static/media/New Cheese.otf": "/clicker-game/static/media/New Cheese.866a0f6205b1c41bfdbc.otf",
+    "static/media/cart.png": "/clicker-game/static/media/cart.2384aea01699a95145d5.png",
     "static/media/bite.mp3": "/clicker-game/static/media/bite.e7ad2a801d4d2b7b95bc.mp3",
     "static/media/click.mp3": "/clicker-game/static/media/click.8a763dc94dd8642a3eed.mp3",
-    "static/media/upgrades.ico": "/clicker-game/static/media/upgrades.011c20f61d95d1af0372.ico",
     "index.html": "/clicker-game/index.html",
-    "main.c519dd16.css.map": "/clicker-game/static/css/main.c519dd16.css.map",
-    "main.496d188b.js.map": "/clicker-game/static/js/main.496d188b.js.map"
+    "main.ee25e087.css.map": "/clicker-game/static/css/main.ee25e087.css.map",
+    "main.ed361e11.js.map": "/clicker-game/static/js/main.ed361e11.js.map"
   },
   "entrypoints": [
-    "static/css/main.c519dd16.css",
-    "static/js/main.496d188b.js"
+    "static/css/main.ee25e087.css",
+    "static/js/main.ed361e11.js"
   ]
 }
