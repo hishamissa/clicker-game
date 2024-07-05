@@ -5,11 +5,14 @@ import cheeseImage from './assets/cheese.png'; // Import the cheese image
 import upgradesIcon from './assets/cart.png'; // Import the upgrades icon
 import saveIcon from './assets/diskette.png'; // Import the save icon
 import settingsIcon from './assets/settings.png'; // Import the settings icon
+import infoIcon from './assets/information.png'; // Import the info icon
 /* Import the audio files */
 import backgroundMusic from './sounds/music.mp3';
 import clickSound from './sounds/click.mp3'; 
 import bite from './sounds/bite.mp3'; 
 import upgradeSound from './sounds/upgrade.mp3'; 
+import saveSound from './sounds/save.mp3';
+import wooshSound from './sounds/woosh.mp3';
 
 const music = new Audio(backgroundMusic); 
 music.volume = 0.2; // Set the volume of the background music to 20%
@@ -32,15 +35,18 @@ function App() {
   const [cheeseResearchLabLevel, setCheeseResearchLabLevel] = useState(0);
   const [cheeseCorporationLevel, setCheeseCorporationLevel] = useState(0);
   const [globalCheeseEnterpriseLevel, setGlobalCheeseEnterpriseLevel] = useState(0);
+  const [cheeseGodLevel, setCheeseGodLevel] = useState(0);
   const [galacticCheeseConglomerateLevel, setGalacticCheeseConglomerateLevel] = useState(0);
   const [popupMessage, setPopupMessage] = useState('');
   const [popupKey, setPopupKey] = useState(0); // Used to force re-render the popup message
   const [sideBarVisible, setSideBarVisible] = useState(false); 
+  const clickCount = useRef(0); // Initialize the click count ref
   const [audioPlayed, setAudioPlayed] = useState(false);
-  const [clickCount, setClickCount] = useState(0); 
   const [nextBiteInterval, setNextBiteInterval] = useState(getRandomInterval());
   const [isAutoSaveEnabled, setIsAutoSaveEnabled] = useState(false);
   const [showAutosavePopup, setShowAutosavePopup] = useState(false);
+  const [showSaveNotification, setShowSaveNotification] = useState(false); // State to show the save notification
+  const [infoVisible, setInfoVisible] = useState(false); // State to show the info modal
 
   /* Cheese per Click upgrade settings */
   const cheeseCutterBaseCost = 10;
@@ -67,6 +73,8 @@ function App() {
   const globalCheeseEnterpriseMultiplier = 1.55;
   const galacticCheeseConglomerateBaseCost = 5000000;
   const galacticCheeseConglomerateMultiplier = 1.60;
+  const cheeseGodBaseCost = 100000000;
+  const cheeseGodMultiplier = 2;
 
   const formatNumber = (number) => {
     if (number >= 1000000000) {
@@ -103,13 +111,15 @@ function App() {
   const getCheeseCorporationCost = () => Math.round(cheeseCorporationBaseCost * Math.pow(cheeseCorporationMultiplier, cheeseCorporationLevel));
   const getGlobalCheeseEnterpriseCost = () => Math.round(globalCheeseEnterpriseBaseCost * Math.pow(globalCheeseEnterpriseMultiplier, globalCheeseEnterpriseLevel));
   const getGalacticCheeseConglomerateCost = () => Math.round(galacticCheeseConglomerateBaseCost * Math.pow(galacticCheeseConglomerateMultiplier, galacticCheeseConglomerateLevel));
+  const getCheeseGodCost = () => Math.round(cheeseGodBaseCost * Math.pow(cheeseGodMultiplier, cheeseGodLevel));
 
   /* Function to calculate the total cheese per second */
   const getCheesePerSecond = () => (dairyCowLevel * 0.1) + (cheeseMakerLevel * 0.5) + 
                                   (cheeseFactoryLevel * 2) + (artisanCheeseMakerLevel * 5) + 
                                   (cheeseShopLevel * 10) + (cheeseExporterLevel * 20) + 
                                   (cheeseResearchLabLevel * 50) + (cheeseCorporationLevel * 100) + 
-                                  (globalCheeseEnterpriseLevel * 200) + (galacticCheeseConglomerateLevel * 500);
+                                  (globalCheeseEnterpriseLevel * 200) + (galacticCheeseConglomerateLevel * 500) +
+                                  (cheeseGodLevel * 100000);
 
   /* Audio settings */
   const clickAudio = new Audio(clickSound);
@@ -118,10 +128,14 @@ function App() {
   biteAudio.volume = 0.7; // Set the volume of the bite sound to 70%
   const upgradeAudio = new Audio(upgradeSound);
   upgradeAudio.volume = 1; // Set the volume of the upgrade sound to 100%
+  const saveAudio = new Audio(saveSound);
+  saveAudio.volume = 1; // Set the volume of the save sound to 100%
+  const wooshAudio = new Audio(wooshSound);
+  wooshAudio.volume = 1; // Set the volume of the woosh sound to 100%
 
   /* Function to get a random interval for the bite sound */
   function getRandomInterval() {
-    const intervals = [3, 4, 5, 6, 7, 8]; 
+    const intervals = [1, 2]; 
     return intervals[Math.floor(Math.random() * intervals.length)]; // Return a random interval from the intervals array
   }
 
@@ -141,16 +155,13 @@ function App() {
       music.loop = true;
     }
     /* Play the click sound when clicked */
-    setClickCount((prevCount) => {
-      const newCount = prevCount + 1;
-      if (newCount % nextBiteInterval === 0) {
-        biteAudio.play(); 
-        setNextBiteInterval(getRandomInterval());
-      } else {
+    const newCount = clickCount + 1;
+    if (newCount % nextBiteInterval === 0) {
+      biteAudio.play(); 
+      setNextBiteInterval(getRandomInterval());
+    } else {
         clickAudio.play();
       }
-      return newCount;
-    });
     /* Increase the cheese count by the cheese per click */
     setCheeseCount(cheeseCount + cheesePerClick);
     /* Bounce the cheese image */
@@ -313,6 +324,18 @@ function App() {
     }
   };
 
+  const buyCheeseGod = () => {
+    const cost = getCheeseGodCost();
+    if (cheeseCount >= cost) {
+      setCheeseCount(cheeseCount - cost);
+      setCheeseGodLevel(cheeseGodLevel + 1);
+      setPopupMessage('+100000 CHEESE PER SECOND!');
+      setPopupKey(Date.now());
+      upgradeAudio.currentTime = 0.5;
+      upgradeAudio.play();
+    }
+  };
+
   const saveGame = () => {
     const gameState = {
       cheeseCount,
@@ -327,10 +350,15 @@ function App() {
       cheeseResearchLabLevel,
       cheeseCorporationLevel,
       globalCheeseEnterpriseLevel,
-      galacticCheeseConglomerateLevel
+      galacticCheeseConglomerateLevel,
+      cheeseGodLevel
     };
     localStorage.setItem('cheeseClickerGameState', JSON.stringify(gameState));
-    alert('Game saved successfully!');
+    setShowSaveNotification(true);
+    saveAudio.play(); // Play the save audio
+    setTimeout(() => {
+      setShowSaveNotification(false);
+    }, 3000); // Hide the save notification after 3 seconds
   };
 
   const loadGame = () => {
@@ -349,6 +377,7 @@ function App() {
       setCheeseCorporationLevel(savedGameState.cheeseCorporationLevel);
       setGlobalCheeseEnterpriseLevel(savedGameState.globalCheeseEnterpriseLevel);
       setGalacticCheeseConglomerateLevel(savedGameState.galacticCheeseConglomerateLevel);
+      setCheeseGodLevel(savedGameState.cheeseGodLevel);
     }
   };
 
@@ -366,6 +395,7 @@ function App() {
     setCheeseCorporationLevel(0);
     setGlobalCheeseEnterpriseLevel(0);
     setGalacticCheeseConglomerateLevel(0);
+    setCheeseGodLevel(0);
     localStorage.removeItem('cheeseClickerGameState');
   };
 
@@ -402,7 +432,8 @@ function App() {
                                                               (2 * cheeseFactoryLevel) + (5 * artisanCheeseMakerLevel) + 
                                                               (10 * cheeseShopLevel) + (20 * cheeseExporterLevel) + 
                                                               (50 * cheeseResearchLabLevel) + (100 * cheeseCorporationLevel) + 
-                                                              (200 * globalCheeseEnterpriseLevel) + (500 * galacticCheeseConglomerateLevel));
+                                                              (200 * globalCheeseEnterpriseLevel) + (500 * galacticCheeseConglomerateLevel) +
+                                                              (100000 * cheeseGodLevel));
       }, 1000); // Generate 0.1 cheese per second
     }
     /* Clear the interval when the component is unmounted */
@@ -412,6 +443,8 @@ function App() {
   const toggleSideBar = () => {
     /* Toggle the visibility of the sidebar */
     setSideBarVisible(!sideBarVisible);
+    wooshAudio.currentTime = 0.27;
+    wooshAudio.play(); // Play the woosh audio
   };
 
   const isUpgradeAvailable = () => {
@@ -426,7 +459,8 @@ function App() {
       getCheeseResearchLabCost(),
       getCheeseCorporationCost(),
       getGlobalCheeseEnterpriseCost(),
-      getGalacticCheeseConglomerateCost()
+      getGalacticCheeseConglomerateCost(),
+      getCheeseGodCost()
     ];
     return upgradeCosts.some(cost => cheeseCount >= cost);
   };
@@ -436,6 +470,14 @@ function App() {
 
   const toggleSettings = () => {
     setSettingsVisible(!settingsVisible);
+    wooshAudio.currentTime = 0.27;
+    wooshAudio.play();
+  };
+
+  const toggleInfo = () => {
+    setInfoVisible(!infoVisible);
+    wooshAudio.currentTime = 0.27;
+    wooshAudio.play();
   };
 
   /* UseEffect hook to clear the popup message after 3 seconds */
@@ -501,7 +543,7 @@ function App() {
             disabled={cheeseCount < getCheeseFactoryCost()}
           >
             <div className="upgrade-details">
-              <span className="upgrade-name">Cheese Factory</span>
+              <span className="upgrade-name">Cheese Shop</span>
               <span className="upgrade-level">Level {cheeseFactoryLevel}</span>
               <span className="upgrade-cost">{formatNumber(getCheeseFactoryCost())} 🧀</span>
             </div>
@@ -514,7 +556,7 @@ function App() {
             disabled={cheeseCount < getArtisanCheeseMakerCost()}
           >
             <div className="upgrade-details">
-              <span className="upgrade-name">Artisan Maker</span>
+              <span className="upgrade-name">Cheese Connoisseur</span>
               <span className="upgrade-level">Level {artisanCheeseMakerLevel}</span>
               <span className="upgrade-cost">{formatNumber(getArtisanCheeseMakerCost())} 🧀</span>
             </div>
@@ -527,7 +569,7 @@ function App() {
             disabled={cheeseCount < getCheeseShopCost()}
           >
             <div className="upgrade-details">
-              <span className="upgrade-name">Cheese Shop</span>
+              <span className="upgrade-name">Cheese Factory</span>
               <span className="upgrade-level">Level {cheeseShopLevel}</span>
               <span className="upgrade-cost">{formatNumber(getCheeseShopCost())} 🧀</span>
             </div>
@@ -597,6 +639,19 @@ function App() {
               <span className="upgrade-cost">{formatNumber(getGalacticCheeseConglomerateCost())} 🧀</span>
             </div>
           </button>
+          <button
+            className="upgrade-button text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl"
+            /* Buy the galactic cheese conglomerate upgrade when clicked */
+            onClick={buyCheeseGod}
+            /* Disable the button if the player doesn't have enough cheese */
+            disabled={cheeseCount < getCheeseGodCost()}
+          >
+            <div className="upgrade-details">
+              <span className="upgrade-name">Cheese GOD</span>
+              <span className="upgrade-level">Level {cheeseGodLevel}</span>
+              <span className="upgrade-cost">{formatNumber(getCheeseGodCost())} 🧀</span>
+            </div>
+          </button>
         </div>
         <div className="App-content">
           {/* Header section */}
@@ -617,6 +672,10 @@ function App() {
                       onClick={toggleSettings}>
                       <img src={settingsIcon} alt="Settings" className={`w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 lg:w-15 lg:h-15 xl:w-18 xl:h-18`}/>
               </button>
+              <button className={`info-button fixed top-5 ${sideBarVisible ? 'left-60' : 'left-5'} z-50`}
+                      onClick={toggleInfo}>
+                      <img src={infoIcon} alt="Info" className={`w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 xl:w-18 xl:h-18`}/>
+              </button>
             </div>
             {/* Title of the game */}
             <h1 className="cheese-title">Cheese Clicker</h1>
@@ -633,6 +692,7 @@ function App() {
             </div>
             {/* Popup message */}
             {popupMessage && <div key={popupKey} className="popup-message">{popupMessage}</div>}
+            {showSaveNotification && <div className="save-notification">Game saved!</div>}
           </header>
         </div>
         {settingsVisible && (
@@ -666,6 +726,25 @@ function App() {
             </div>
           </div>
         )}
+        {infoVisible && (
+              <div className="info-modal">
+                <h2>INFORMATION</h2>
+                <button className="close-button" onClick={toggleInfo}>X</button>
+                <p>Welcome to <span className="h3">Cheese Clicker !</span> Click the cheese to earn! Spend your cheese on upgrades to earn more cheese per click and per second. Have fun!
+                This game is a fun project created to demonstrate skills in web development.</p>
+                <h3>Tools and skills Used</h3>
+                <ul>
+                  <li><span className="glow-effect">HTML | CSS | JavaScript | React | Local Storage | Audio | Animations</span></li>
+                </ul>
+                <h3>Links</h3>
+                <ul>
+                  <li><a href="https://github.com/hishamissa" target="_blank">GitHub</a></li>
+                  <li><a href="https://www.hishamissa.com" target="_blank">My Personal Website</a></li>
+                  <li><a href="https://www.linkedin.com/in/hisham-issaa/" target="_blank">LinkedIn</a></li>
+                </ul>
+                <p2>Developed, designed and implemented by Hisham Issa. Hisham Issa 2024 All rights reserved.</p2>
+              </div>
+            )}
     </div>
   );
 }

@@ -1,8 +1,28 @@
 /* This file contains the CSS for the entire application. */
 
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap');
+
+@keyframes gradientBackground {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
 .App {
   text-align: center;
   padding: 0px;
+}
+
+body, .App-container {
+  background: linear-gradient(270deg, #f7e7b4, #f6cea1, #fffbb4, #fdd38f);
+  background-size: 1000% 1000%;
+  animation: gradientBackground 30s ease infinite;
 }
 
 .App.container {
@@ -21,7 +41,6 @@
 
 /* Styling for the header */
 .App-header {
-  background-color: #f7e7b4;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -383,6 +402,132 @@
   transform: scale(1.05);
 }
 
+.info-button {
+  background-color: transparent;
+  width: 10vw;
+  height: auto;
+  padding: 5px;
+  border: none;
+  cursor: pointer;
+  align-items: left;
+  justify-content: left;
+  display: flex;
+  transition: background-color 0.3s ease;
+  transition: left 0.5s ease, transform 0.5s ease;
+  margin-top: 260px;
+  margin-left: 11px;
+}
+
+.info-button:hover {
+  background-color: transparent;
+  transform: scale(1.2);
+}
+
+.info-modal {
+  position: fixed;
+  text-align: center;
+  justify-content: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60%;
+  height: 50%;
+  background-color: #ffdc9b;
+  padding: 20px;
+  border: 2px solid #6b4f1e;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  overflow: auto;
+}
+
+.info-modal h2 {
+  font-family: "cheese-upgrades"; /* Custom font */
+  text-align: center;
+  font-size: 2.5rem;
+  text-shadow: 2px 2.5px #dc533b;
+  color: #fda744;
+  margin-bottom: 0px;
+}
+
+.info-modal h3 {
+  font-family: "cheese-upgrades"; /* Custom font */
+  text-align: center;
+  font-size: 1.2rem;
+  text-shadow: 1px 1px #dc533b;
+  color: #fda744;
+  margin-bottom: 0px;
+}
+
+.h3 {
+  font-family: "cheese-upgrades"; /* Custom font */
+  text-align: center;
+  font-size: 1rem;
+  text-shadow: 1px 1px #dc533b;
+  color: #fda744;
+  margin-bottom: 0px;
+}
+
+.info-modal p {
+  text-align: center;
+  margin: 10px 0;
+}
+
+.info-modal p2 {
+  text-align: center;
+  margin: 0px;
+  padding: 0px;
+  font-size: 0.65rem;
+}
+
+.info-modal ul {
+  text-align: center;
+  margin: 10px 0;
+  font-weight: bold;
+}
+
+.info-modal a {
+  color: blue;
+  text-decoration: none;
+}
+
+.info-modal a:hover {
+  text-decoration: underline;
+}
+
+.save-notification {
+  position: fixed;
+  top: 10px;
+  right: -200px; /* Hide the notification off-screen */
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 1rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  animation: slide-in-out 3s ease-in-out; /* Add a slide-in-out animation */
+}
+
+@keyframes slide-in-out {
+  0% {
+    right: -200px;
+    opacity: 0;
+  }
+  10% {
+    right: 20px; /* Slide in to be visible */
+    opacity: 1;
+  }
+  90% {
+    right: 20px; /* Stay visible for most of the duration */
+    opacity: 1;
+  }
+  100% {
+    right: -200px; /* Slide out off-screen */
+    opacity: 0;
+  }
+}
+
 .autosave-button {
   background-color: #4caf50;
   color: white;
@@ -422,6 +567,7 @@
 }
 
 .close-button {
+  font-family: "cheese-upgrades";
   position: absolute;
   top: 10px;
   right: 10px;
@@ -432,7 +578,7 @@
   width: 30px;
   height: 30px;
   cursor: pointer;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -464,6 +610,47 @@
 
 .sidebar h2 {
   margin-top: 0;
+}
+
+.glow-effect {
+  font-family: 'Roboto Slab', serif; /* Use a better-looking font */
+  font-weight: bold;
+  color: #000; /* Black text */
+  animation: glow 3s infinite alternate;
+  font-size: 1rem; /* Keep the size */
+  text-shadow: 0 0 2px rgba(255, 0, 0, 0.6), 0 0 4px rgba(255, 0, 0, 0.6),
+               0 0 6px rgba(255, 0, 0, 0.6), 0 0 8px rgba(255, 0, 0, 0.6);
+}
+
+@keyframes glow {
+  0% {
+    text-shadow: 0 0 2px rgba(255, 0, 0, 0.6), 0 0 4px rgba(255, 0, 0, 0.6),
+                 0 0 6px rgba(255, 0, 0, 0.6), 0 0 8px rgba(255, 0, 0, 0.6);
+  }
+  16% {
+    text-shadow: 0 0 2px rgba(255, 127, 0, 0.6), 0 0 4px rgba(255, 127, 0, 0.6),
+                 0 0 6px rgba(255, 127, 0, 0.6), 0 0 8px rgba(255, 127, 0, 0.6);
+  }
+  32% {
+    text-shadow: 0 0 2px rgba(255, 255, 0, 0.6), 0 0 4px rgba(255, 255, 0, 0.6),
+                 0 0 6px rgba(255, 255, 0, 0.6), 0 0 8px rgba(255, 255, 0, 0.6);
+  }
+  48% {
+    text-shadow: 0 0 2px rgba(0, 255, 0, 0.6), 0 0 4px rgba(0, 255, 0, 0.6),
+                 0 0 6px rgba(0, 255, 0, 0.6), 0 0 8px rgba(0, 255, 0, 0.6);
+  }
+  64% {
+    text-shadow: 0 0 2px rgba(0, 0, 255, 0.6), 0 0 4px rgba(0, 0, 255, 0.6),
+                 0 0 6px rgba(0, 0, 255, 0.6), 0 0 8px rgba(0, 0, 255, 0.6);
+  }
+  80% {
+    text-shadow: 0 0 2px rgba(75, 0, 130, 0.6), 0 0 4px rgba(75, 0, 130, 0.6),
+                 0 0 6px rgba(75, 0, 130, 0.6), 0 0 8px rgba(75, 0, 130, 0.6);
+  }
+  100% {
+    text-shadow: 0 0 2px rgba(148, 0, 211, 0.6), 0 0 4px rgba(148, 0, 211, 0.6),
+                 0 0 6px rgba(148, 0, 211, 0.6), 0 0 8px rgba(148, 0, 211, 0.6);
+  }
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
