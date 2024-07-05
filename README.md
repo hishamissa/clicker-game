@@ -1,7 +1,9 @@
 # Cheese Clicker
 
+---
+
 <div align="center">
-  <a href="https://hishamissa.github.io/clicker-game/" style="color: orange; font-weight: bold; font-size: 1.5em;">Play Cheese Clicker Now!</a>
+  <a href="https://hishamissa.github.io/clicker-game/" target="_blank" style="color: orange; font-weight: bold; font-size: 1.5em;">Play Cheese Clicker Now!</a>
 </div>
 
 ---
