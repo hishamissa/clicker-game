@@ -3,15 +3,23 @@ import './App.css';
 /* Import the images */
 import cheeseImage from './assets/cheese.png'; // Import the cheese image
 import upgradesIcon from './assets/cart.png'; // Import the upgrades icon
+import saveIcon from './assets/diskette.png'; // Import the save icon
+import settingsIcon from './assets/settings.png'; // Import the settings icon
 /* Import the audio files */
 import backgroundMusic from './sounds/music.mp3';
 import clickSound from './sounds/click.mp3'; 
 import bite from './sounds/bite.mp3'; 
 import upgradeSound from './sounds/upgrade.mp3'; 
-import saveIcon from './assets/diskette.png'; // Import the save icon
+
+const music = new Audio(backgroundMusic); 
+music.volume = 0.2; // Set the volume of the background music to 20%
+music.loop = true; // Loop the background music
 
 /* Main App component */
 function App() {
+  const savedVolume = localStorage.getItem('cheeseClickerVolume');
+  const [volume, setVolume] = useState(savedVolume ? parseInt(savedVolume, 10) : 50); // Default volume set to 50%
+
   const [cheeseCount, setCheeseCount] = useState(0); // Initialize the cheese count state
   const [cheesePerClick, setCheesePerClick] = useState(1); // Initialize the cheese per click state
   const [cheeseCutterLevel, setCheeseCutterLevel] = useState(0);
@@ -31,6 +39,8 @@ function App() {
   const [audioPlayed, setAudioPlayed] = useState(false);
   const [clickCount, setClickCount] = useState(0); 
   const [nextBiteInterval, setNextBiteInterval] = useState(getRandomInterval());
+  const [isAutoSaveEnabled, setIsAutoSaveEnabled] = useState(false);
+  const [showAutosavePopup, setShowAutosavePopup] = useState(false);
 
   /* Cheese per Click upgrade settings */
   const cheeseCutterBaseCost = 10;
@@ -70,6 +80,17 @@ function App() {
     }
   };
 
+  /* Function to format the cheese count */
+  const formatCheeseCount = (number) => {
+    if (number >= 1000) {
+      return number.toLocaleString('en-US', { minimumFractionDigits: 1 });
+    } else if (number >= 10000) {
+      return number.toLocaleString('en-US', { maximumFractionDigits: 0 });
+    } else {
+      return number.toLocaleString('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+    }
+  };
+
   /* Function to calculate the scaled cost of the upgrades */
   const getCheeseCutterCost = () => Math.round(cheeseCutterBaseCost * Math.pow(cheeseCutterMultiplier, cheeseCutterLevel));
   const getDairyCowCost = () => Math.round(dairyCowBaseCost * Math.pow(dairyCowMultiplier, dairyCowLevel)); 
@@ -91,8 +112,6 @@ function App() {
                                   (globalCheeseEnterpriseLevel * 200) + (galacticCheeseConglomerateLevel * 500);
 
   /* Audio settings */
-  const music = new Audio(backgroundMusic); 
-  music.volume = 0.2; // Set the volume of the background music to 20%
   const clickAudio = new Audio(clickSound);
   clickAudio.volume = 1; // Set the volume of the click sound to 100%
   const biteAudio = new Audio(bite);
@@ -106,14 +125,20 @@ function App() {
     return intervals[Math.floor(Math.random() * intervals.length)]; // Return a random interval from the intervals array
   }
 
+  const handleVolumeChange = (event) => {
+    const newVolume = event.target.value;
+    setVolume(newVolume);
+    music.volume = newVolume / 100;
+  };
+
   /* Function to handle the cheese click event */
   const handleClick = () => {
     /* Play the background music */
     if (!audioPlayed) {
       music.currentTime = 1;
       music.play();
-      music.loop = true;
       setAudioPlayed(true);
+      music.loop = true;
     }
     /* Play the click sound when clicked */
     setClickCount((prevCount) => {
@@ -327,9 +352,45 @@ function App() {
     }
   };
 
+  const restartGame = () => {
+    setCheeseCount(0);
+    setCheesePerClick(1);
+    setCheeseCutterLevel(0);
+    setDairyCowLevel(0);
+    setCheeseMakerLevel(0);
+    setCheeseFactoryLevel(0);
+    setArtisanCheeseMakerLevel(0);
+    setCheeseShopLevel(0);
+    setCheeseExporterLevel(0);
+    setCheeseResearchLabLevel(0);
+    setCheeseCorporationLevel(0);
+    setGlobalCheeseEnterpriseLevel(0);
+    setGalacticCheeseConglomerateLevel(0);
+    localStorage.removeItem('cheeseClickerGameState');
+  };
+
   useEffect(() => {
     loadGame();
   }, []);
+
+  /* UseEffect hook to enable autosaving */
+  useEffect(() => {
+    let autoSaveInterval;
+    if (isAutoSaveEnabled) {
+      autoSaveInterval = setInterval(() => {
+        saveGame();
+      }, 300000); // Save the game every 5 minutes
+      setShowAutosavePopup(true);
+      setTimeout(() => {
+        setShowAutosavePopup(false);
+      }, 3000);
+    }
+    return () => clearInterval(autoSaveInterval);
+  }, [isAutoSaveEnabled]);
+
+  useEffect(() => {
+    music.volume = volume / 100;
+  }, [volume]);
 
   /* UseEffect hook to generate cheese per second */
   useEffect(() => {
@@ -371,6 +432,11 @@ function App() {
   };
 
   const shouldHightlight = !sideBarVisible && isUpgradeAvailable();
+  const [settingsVisible, setSettingsVisible] = useState(false);
+
+  const toggleSettings = () => {
+    setSettingsVisible(!settingsVisible);
+  };
 
   /* UseEffect hook to clear the popup message after 3 seconds */
   useEffect(() => {
@@ -537,16 +603,20 @@ function App() {
           <header className="App-header w-full">
             {/* Sidebar (purchases) button */}
             <div className="button-column fixed top-5 left-5 z-50 flex flex-col">
-            <button className={`toggle-button fixed top-5 ${sideBarVisible ? 'left-60' : 'left-5'} z-50`} 
-                    /* Toggle the sidebar visibility when clicked */
-                    onClick={toggleSideBar}>
-                    {/* Upgrades icon that reveals sidebar */}
-                    <img src={upgradesIcon} alt="Upgrades" className={`w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-18 lg:h-18 xl:w-20 xl:h-20 ${shouldHightlight ? 'highlight' : ''}`}/>
-            </button>
-            <button className={`save-button fixed top-5 ${sideBarVisible ? 'left-60' : 'left-5'} z-50`} 
-                    onClick={saveGame}>
-                    <img src={saveIcon} alt="Save" className={`w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 xl:w-18 xl:h-18`}/>
-            </button>
+              <button className={`toggle-button fixed top-5 ${sideBarVisible ? 'left-60' : 'left-5'} z-50`} 
+                      /* Toggle the sidebar visibility when clicked */
+                      onClick={toggleSideBar}>
+                      {/* Upgrades icon that reveals sidebar */}
+                      <img src={upgradesIcon} alt="Upgrades" className={`w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-18 lg:h-18 xl:w-20 xl:h-20 ${shouldHightlight ? 'highlight' : ''}`}/>
+              </button>
+              <button className={`save-button fixed top-5 ${sideBarVisible ? 'left-60' : 'left-5'} z-50`} 
+                      onClick={saveGame}>
+                      <img src={saveIcon} alt="Save" className={`w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 lg:w-15 lg:h-15 xl:w-18 xl:h-18`}/>
+              </button>
+              <button className={`settings-button fixed top-5 ${sideBarVisible ? 'left-60' : 'left-5'} z-50`}
+                      onClick={toggleSettings}>
+                      <img src={settingsIcon} alt="Settings" className={`w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 lg:w-15 lg:h-15 xl:w-18 xl:h-18`}/>
+              </button>
             </div>
             {/* Title of the game */}
             <h1 className="cheese-title">Cheese Clicker</h1>
@@ -555,7 +625,7 @@ function App() {
               <img src={cheeseImage} alt="Cheese" className="cheese-image w-64 h-64 sm:w-64 sm:h-64 md:w-64 m:h-64 lg:w-64 lg:h-64 xl:w-64 xl:h-64" />
             </div>
             {/* Cheese count */}
-            <p className="cheese-count text-4xl sm:text-5xl md:text-5xl lg:text-5xl mt-4">🧀 {cheeseCount.toFixed(1)}</p>
+            <p className="cheese-count text-4xl sm:text-5xl md:text-5xl lg:text-5xl mt-4">🧀 {formatCheeseCount(cheeseCount)}</p>
             {/* Cheese stats */}
             <div className="cheese-stats flex items-center text-xl sm:text-2xl md:text-2xl lg:text-2xl xl:text-2xl">
               <p className="cheese-per-click flex items-center text-xl sm:text-xl md:text-2xl lg:text-2xl xl:text-2xl">CHeeSE PER CLICK: {cheesePerClick}</p>
@@ -565,6 +635,37 @@ function App() {
             {popupMessage && <div key={popupKey} className="popup-message">{popupMessage}</div>}
           </header>
         </div>
+        {settingsVisible && (
+          <div className="settings-modal">
+            <h2>Settings</h2>
+            <button className="close-button" onClick={toggleSettings}>X</button>
+            <div className="volume-slider-container">
+              <label htmlFor="volume-slider">MUSIC VOLUME</label>
+              <input
+                type="range"
+                id="volume-slider"
+                className="volume-slider"
+                min="0"
+                max="100"
+                value={volume}
+                onChange={handleVolumeChange}
+              />
+              <button
+                className="restart-button mt-4"
+                onClick={restartGame}
+              >
+                RESTART GAME
+              </button>
+              <button
+                className={`autosave-button mt-4 ${isAutoSaveEnabled ? 'enabled' : 'disabled'}`}
+                onClick={() => setIsAutoSaveEnabled(!isAutoSaveEnabled)}
+              >
+                AUTOSAVE: {isAutoSaveEnabled ? 'ON' : 'OFF'}
+              </button>
+                {showAutosavePopup && <div className="autosave-popup">Autosaves every 5 seconds!</div>}
+            </div>
+          </div>
+        )}
     </div>
   );
 }

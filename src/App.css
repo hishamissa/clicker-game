@@ -218,14 +218,6 @@
   animation: flyIn 3s ease-in-out; /* Add a fly-in animation */
 }
 
-/* Add a fade-in and fade-out animation to the popup message */
-@keyframes fadeInOut {
-  0% { opacity: 0; }
-  10% { opacity: 1; }
-  90% { opacity: 1; }
-  100% { opacity: 0; }
-}
-
 /* Add a fly-in animation to the popup message */
 @keyframes flyIn {
   0% {
@@ -268,14 +260,14 @@
   filter: drop-shadow(0 0 20px rgb(143, 255, 44));
 }
 
-/* Position the button in the top-left corner when sidebar is HIDDEN */
+/* Position the button in the top-left corner when sidebar is VISIBLE */
 .left-60 {
   top: 5px;
-  left: 170px;
+  left: 160px;
   transition: left 0.5s ease; /* Ensure the transition matches the sidebar's transition */
 }
 
-/* Position the button in the top-left corner when the sidebar is VISIBLE */
+/* Position the button in the top-left corner when the sidebar is HIDDEN */
 .left-5 {
   top: 5px;
   left: 15px;
@@ -285,16 +277,6 @@
 /* Scale the button up when hovered over */
 .toggle-button:hover {
   background-color: transparent;
-  transform: scale(1.2);
-}
-
-/* Element to handle the sidebar */
-.button-visible {
-  left: 30vw;
-  transition: left 0.5s ease;
-}
-
-.button-visible:hover {
   transform: scale(1.1);
 }
 
@@ -306,21 +288,159 @@
 
 .save-button {
   background-color: transparent;
-  color: white;
+  width: 10vw;
+  height: auto;
   padding: 5px;
   border: none;
-  border-radius: 5px;
   cursor: pointer;
-  font-size: 1rem;
+  align-items: left;
+  justify-content: left;
+  display: flex;
   transition: background-color 0.3s ease;
   transition: left 0.5s ease, transform 0.5s ease;
   margin-top: 100px;
-  margin-left: 7px;
+  margin-left: 11px;
+}
+
+.settings-button {
+  background-color: transparent;
+  width: 10vw;
+  height: auto;
+  padding: 5px;
+  border: none;
+  cursor: pointer;
+  align-items: left;
+  justify-content: left;
+  display: flex;
+  transition: background-color 0.3s ease;
+  transition: left 0.5s ease, transform 0.5s ease;
+  margin-top: 180px;
+  margin-left: 11px;
 }
 
 .save-button:hover {
   background-color: transparent;
   transform: scale(1.2);
+}
+
+.settings-button:hover {
+  background-color: transparent;
+  transform: scale(1.2);
+}
+
+.settings-modal {
+  font-family: "cheese-upgrades";
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50%;
+  height: 50%;
+  background-color: #ffdc9b;
+  padding: 20px;
+  border: 2px solid #6b4f1e;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  overflow: auto;
+}
+
+.settings-modal h2 {
+  font-family: "cheese-upgrades";
+  font-size: 3rem;
+  text-shadow: 2px 2.5px #dc533b;
+  color: #fda744;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.settings-modal .volume-slider-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.settings-modal .volume-slider {
+  width: 60%;
+  margin-top: 10px;
+}
+
+.restart-button {
+  background-color: #ff4c4c;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  margin-top: 100px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.restart-button:hover {
+  background-color: #ff1a1a;
+  transform: scale(1.05);
+}
+
+.autosave-button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  margin-top: -100px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.autosave-button:hover {
+  background-color: #45a049;
+  transform: scale(1.05);
+}
+
+.autosave-button.disabled {
+  background-color: #cccccc;
+}
+
+.autosave-button.enabled {
+  background-color: #4caf50;
+}
+
+.autosave-popup {
+  font-family: 'Courier New', Courier, monospace;
+  position: absolute;
+  color: #262525;
+  padding: 5px 5px;
+  border-radius: 3px;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -150%);
+  font-size: 0.68rem;
+  opacity: 0.9;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: red;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.close-button:hover {
+  background-color: darkred;
+  transform: scale(1.05);
 }
 
 /* Element to handle the sidebar */
