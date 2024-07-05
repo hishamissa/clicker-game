@@ -1,11 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './App.css'; 
-/* Import the images */
-import cheeseImage from './assets/cheese.png'; // Import the cheese image
-import upgradesIcon from './assets/cart.png'; // Import the upgrades icon
-import saveIcon from './assets/diskette.png'; // Import the save icon
-import settingsIcon from './assets/settings.png'; // Import the settings icon
-import infoIcon from './assets/information.png'; // Import the info icon
+import AppContent from './AppContent';
 /* Import the audio files */
 import backgroundMusic from './sounds/music.mp3';
 import clickSound from './sounds/click.mp3'; 
@@ -20,11 +15,12 @@ music.loop = true; // Loop the background music
 
 /* Main App component */
 function App() {
-  const savedVolume = localStorage.getItem('cheeseClickerVolume');
+  const savedVolume = localStorage.getItem('cheeseClickerVolume'); // Get the saved volume from local storage
   const [volume, setVolume] = useState(savedVolume ? parseInt(savedVolume, 10) : 50); // Default volume set to 50%
-
   const [cheeseCount, setCheeseCount] = useState(0); // Initialize the cheese count state
   const [cheesePerClick, setCheesePerClick] = useState(1); // Initialize the cheese per click state
+
+  /* Initialize the upgrades and their levels */
   const [cheeseCutterLevel, setCheeseCutterLevel] = useState(0);
   const [dairyCowLevel, setDairyCowLevel] = useState(0);
   const [cheeseMakerLevel, setCheeseMakerLevel] = useState(0);
@@ -37,14 +33,15 @@ function App() {
   const [globalCheeseEnterpriseLevel, setGlobalCheeseEnterpriseLevel] = useState(0);
   const [cheeseGodLevel, setCheeseGodLevel] = useState(0);
   const [galacticCheeseConglomerateLevel, setGalacticCheeseConglomerateLevel] = useState(0);
-  const [popupMessage, setPopupMessage] = useState('');
+
+  const [popupMessage, setPopupMessage] = useState(''); // Initialize the popup message state
   const [popupKey, setPopupKey] = useState(0); // Used to force re-render the popup message
-  const [sideBarVisible, setSideBarVisible] = useState(false); 
+  const [sideBarVisible, setSideBarVisible] = useState(false); // Initialize the sidebar visibility state
   const clickCount = useRef(0); // Initialize the click count ref
-  const [audioPlayed, setAudioPlayed] = useState(false);
-  const [nextBiteInterval, setNextBiteInterval] = useState(getRandomInterval());
-  const [isAutoSaveEnabled, setIsAutoSaveEnabled] = useState(false);
-  const [showAutosavePopup, setShowAutosavePopup] = useState(false);
+  const [audioPlayed, setAudioPlayed] = useState(false); // Initialize the audio played state
+  const [nextBiteInterval, setNextBiteInterval] = useState(getRandomInterval()); 
+  const [isAutoSaveEnabled, setIsAutoSaveEnabled] = useState(false); // State to enable/disable autosaving
+  const [showAutosavePopup, setShowAutosavePopup] = useState(false); // State to show the autosave notification
   const [showSaveNotification, setShowSaveNotification] = useState(false); // State to show the save notification
   const [infoVisible, setInfoVisible] = useState(false); // State to show the info modal
 
@@ -76,6 +73,7 @@ function App() {
   const cheeseGodBaseCost = 100000000;
   const cheeseGodMultiplier = 2;
 
+  /* Function to format the cheese upgrade costs to short forms */
   const formatNumber = (number) => {
     if (number >= 1000000000) {
       return (number / 1000000000).toFixed(1) + 'B'; //for billions 
@@ -88,7 +86,7 @@ function App() {
     }
   };
 
-  /* Function to format the cheese count */
+  /* Function to format the total cheese count for readability */
   const formatCheeseCount = (number) => {
     if (number >= 1000) {
       return number.toLocaleString('en-US', { minimumFractionDigits: 1 });
@@ -99,7 +97,7 @@ function App() {
     }
   };
 
-  /* Function to calculate the scaled cost of the upgrades */
+  /* Functions to calculate the scaled cost of the upgrades */
   const getCheeseCutterCost = () => Math.round(cheeseCutterBaseCost * Math.pow(cheeseCutterMultiplier, cheeseCutterLevel));
   const getDairyCowCost = () => Math.round(dairyCowBaseCost * Math.pow(dairyCowMultiplier, dairyCowLevel)); 
   const getCheeseMakerCost = () => Math.round(cheeseMakerBaseCost * Math.pow(cheeseMakerMultiplier, cheeseMakerLevel));
@@ -123,15 +121,15 @@ function App() {
 
   /* Audio settings */
   const clickAudio = new Audio(clickSound);
-  clickAudio.volume = 1; // Set the volume of the click sound to 100%
+  clickAudio.volume = 1; 
   const biteAudio = new Audio(bite);
-  biteAudio.volume = 0.7; // Set the volume of the bite sound to 70%
+  biteAudio.volume = 0.7; 
   const upgradeAudio = new Audio(upgradeSound);
-  upgradeAudio.volume = 1; // Set the volume of the upgrade sound to 100%
+  upgradeAudio.volume = 1;
   const saveAudio = new Audio(saveSound);
-  saveAudio.volume = 1; // Set the volume of the save sound to 100%
+  saveAudio.volume = 1; 
   const wooshAudio = new Audio(wooshSound);
-  wooshAudio.volume = 1; // Set the volume of the woosh sound to 100%
+  wooshAudio.volume = 1;
 
   /* Function to get a random interval for the bite sound */
   function getRandomInterval() {
@@ -139,6 +137,7 @@ function App() {
     return intervals[Math.floor(Math.random() * intervals.length)]; // Return a random interval from the intervals array
   }
 
+  /* Function to handle the volume change event in the settings*/
   const handleVolumeChange = (event) => {
     const newVolume = event.target.value;
     setVolume(newVolume);
@@ -193,17 +192,13 @@ function App() {
   /* Function to buy the dairy cow upgrade */
   const buyDairyCow = () => {
     const cost = getDairyCowCost(); 
-    /* Check if the player has enough cheese to buy the upgrade */
     if (cheeseCount >= cost) {
-      /* Deduct the cost of the upgrade from the cheese count */
       setCheeseCount(cheeseCount - cost);
-      /* Increase the dairy cow level by 1 */
       setDairyCowLevel(dairyCowLevel + 1);
-      /* Display the popup message */
       setPopupMessage('+0.1 CHEESE PER SECOND!');
       setPopupKey(Date.now());
-      upgradeAudio.currentTime = 0.5; /* Start the audio from the middle */
-      upgradeAudio.play(); /* Play the purchase audio */
+      upgradeAudio.currentTime = 0.5;
+      upgradeAudio.play();
     }
   };
 
@@ -324,6 +319,7 @@ function App() {
     }
   };
 
+  /* Function to buy the cheese god upgrade */
   const buyCheeseGod = () => {
     const cost = getCheeseGodCost();
     if (cheeseCount >= cost) {
@@ -336,6 +332,7 @@ function App() {
     }
   };
 
+  /* Function to save the game state to local storage */
   const saveGame = () => {
     const gameState = {
       cheeseCount,
@@ -353,7 +350,7 @@ function App() {
       galacticCheeseConglomerateLevel,
       cheeseGodLevel
     };
-    localStorage.setItem('cheeseClickerGameState', JSON.stringify(gameState));
+    localStorage.setItem('cheeseClickerGameState', JSON.stringify(gameState)); // Save the game state to local storage
     setShowSaveNotification(true);
     saveAudio.play(); // Play the save audio
     setTimeout(() => {
@@ -361,6 +358,7 @@ function App() {
     }, 3000); // Hide the save notification after 3 seconds
   };
 
+  /* Function to load the game state from local storage */
   const loadGame = () => {
     const savedGameState = JSON.parse(localStorage.getItem('cheeseClickerGameState'));
     if (savedGameState) {
@@ -381,6 +379,7 @@ function App() {
     }
   };
 
+  /* Function to restart the game */
   const restartGame = () => {
     setCheeseCount(0);
     setCheesePerClick(1);
@@ -399,6 +398,7 @@ function App() {
     localStorage.removeItem('cheeseClickerGameState');
   };
 
+  /* UseEffect hook to load the game */
   useEffect(() => {
     loadGame();
   }, []);
@@ -418,6 +418,7 @@ function App() {
     return () => clearInterval(autoSaveInterval);
   }, [isAutoSaveEnabled]);
 
+  /* UseEffect hook to control the volume of the music */
   useEffect(() => {
     music.volume = volume / 100;
   }, [volume]);
@@ -440,6 +441,7 @@ function App() {
     return () => clearInterval(interval);
   }, [dairyCowLevel]);
 
+  /* Function to toggle the sidebar visibility */
   const toggleSideBar = () => {
     /* Toggle the visibility of the sidebar */
     setSideBarVisible(!sideBarVisible);
@@ -447,6 +449,7 @@ function App() {
     wooshAudio.play(); // Play the woosh audio
   };
 
+  /* Function to check if an upgrade is available */
   const isUpgradeAvailable = () => {
     const upgradeCosts = [
       getCheeseCutterCost(),
@@ -468,12 +471,14 @@ function App() {
   const shouldHightlight = !sideBarVisible && isUpgradeAvailable();
   const [settingsVisible, setSettingsVisible] = useState(false);
 
+  /* Function to toggle the settings visibility */
   const toggleSettings = () => {
     setSettingsVisible(!settingsVisible);
     wooshAudio.currentTime = 0.27;
     wooshAudio.play();
   };
 
+  /* Function to toggle the info modal */
   const toggleInfo = () => {
     setInfoVisible(!infoVisible);
     wooshAudio.currentTime = 0.27;
@@ -491,261 +496,67 @@ function App() {
 
   /* Return the JSX */
   return (
-    /* Main App container */
-    <div className={`App-container ${sideBarVisible ? 'sidebar-open' : ''}`}>
-      {/* Sidebar displaying upgrade options */}
-      <div className ={`sidebar ${sideBarVisible ? 'visible' : ''}`}>
-          <h2 className = "upgrades">Upgrades</h2>
-          <button
-            className="upgrade-button text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl"
-            /* Buy the cheese cutter upgrade when clicked */
-            onClick={buyCheeseCutter}
-            /* Disable the button if the player doesn't have enough cheese */
-            disabled={cheeseCount < getCheeseCutterCost()}
-          >
-            <div className="upgrade-details">
-              <span className="upgrade-name">Cheese Cutter</span>
-              <span className="upgrade-level">Level {cheeseCutterLevel}</span>
-              <span className="upgrade-cost">{getCheeseCutterCost()} 🧀</span>
-            </div>
-          </button>
-          <button
-            className="upgrade-button text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl"
-            /* Buy the dairy cow upgrade when clicked */
-            onClick={buyDairyCow}
-            /* Disable the button if the player doesn't have enough cheese */
-            disabled={cheeseCount < getDairyCowCost()}
-          >
-            <div className="upgrade-details">
-              <span className="upgrade-name">Dairy Cow</span>
-              <span className="upgrade-level">Level {dairyCowLevel}</span>
-              <span className="upgrade-cost">{getDairyCowCost()} 🧀</span>
-            </div>
-          </button>
-          <button
-            className="upgrade-button text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl"
-            /* Buy the cheese maker upgrade when clicked */
-            onClick={buyCheeseMaker}
-            /* Disable the button if the player doesn't have enough cheese */
-            disabled={cheeseCount < getCheeseMakerCost()}
-          >
-            <div className="upgrade-details">
-              <span className="upgrade-name">Cheese Maker</span>
-              <span className="upgrade-level">Level {cheeseMakerLevel}</span>
-              <span className="upgrade-cost">{getCheeseMakerCost()} 🧀</span>
-            </div>
-          </button>
-          <button
-            className="upgrade-button text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl"
-            /* Buy the cheese factory upgrade when clicked */
-            onClick={buyCheeseFactory}
-            /* Disable the button if the player doesn't have enough cheese */
-            disabled={cheeseCount < getCheeseFactoryCost()}
-          >
-            <div className="upgrade-details">
-              <span className="upgrade-name">Cheese Shop</span>
-              <span className="upgrade-level">Level {cheeseFactoryLevel}</span>
-              <span className="upgrade-cost">{formatNumber(getCheeseFactoryCost())} 🧀</span>
-            </div>
-          </button>
-          <button
-            className="upgrade-button text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl"
-            /* Buy the artisan cheese maker upgrade when clicked */
-            onClick={buyArtisanCheeseMaker}
-            /* Disable the button if the player doesn't have enough cheese */
-            disabled={cheeseCount < getArtisanCheeseMakerCost()}
-          >
-            <div className="upgrade-details">
-              <span className="upgrade-name">Cheese Connoisseur</span>
-              <span className="upgrade-level">Level {artisanCheeseMakerLevel}</span>
-              <span className="upgrade-cost">{formatNumber(getArtisanCheeseMakerCost())} 🧀</span>
-            </div>
-          </button>
-          <button
-            className="upgrade-button text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl"
-            /* Buy the cheese shop upgrade when clicked */
-            onClick={buyCheeseShop}
-            /* Disable the button if the player doesn't have enough cheese */
-            disabled={cheeseCount < getCheeseShopCost()}
-          >
-            <div className="upgrade-details">
-              <span className="upgrade-name">Cheese Factory</span>
-              <span className="upgrade-level">Level {cheeseShopLevel}</span>
-              <span className="upgrade-cost">{formatNumber(getCheeseShopCost())} 🧀</span>
-            </div>
-          </button>  
-          <button
-            className="upgrade-button text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl"
-            /* Buy the cheese exporter upgrade when clicked */
-            onClick={buyCheeseExporter}
-            /* Disable the button if the player doesn't have enough cheese */
-            disabled={cheeseCount < getCheeseExporterCost()}
-          >
-            <div className="upgrade-details">
-              <span className="upgrade-name">Cheese Exporter</span>
-              <span className="upgrade-level">Level {cheeseExporterLevel}</span>
-              <span className="upgrade-cost">{formatNumber(getCheeseExporterCost())} 🧀</span>
-            </div>
-          </button>
-          <button
-            className="upgrade-button text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl"
-            /* Buy the cheese research lab upgrade when clicked */
-            onClick={buyCheeseResearchLab}
-            /* Disable the button if the player doesn't have enough cheese */
-            disabled={cheeseCount < getCheeseResearchLabCost()}
-          >
-            <div className="upgrade-details">
-              <span className="upgrade-name">Cheese Research</span>
-              <span className="upgrade-level">Level {cheeseResearchLabLevel}</span>
-              <span className="upgrade-cost">{formatNumber(getCheeseResearchLabCost())} 🧀</span>
-            </div>
-          </button>
-          <button
-            className="upgrade-button text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl"
-            /* Buy the cheese corporation upgrade when clicked */
-            onClick={buyCheeseCorporation}
-            /* Disable the button if the player doesn't have enough cheese */
-            disabled={cheeseCount < getCheeseCorporationCost()}
-          >
-            <div className="upgrade-details">
-              <span className="upgrade-name">Cheese Inc.</span>
-              <span className="upgrade-level">Level {cheeseCorporationLevel}</span>
-              <span className="upgrade-cost">{formatNumber(getCheeseCorporationCost())} 🧀</span>
-            </div>
-          </button>
-          <button
-            className="upgrade-button text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl"
-            /* Buy the global cheese enterprise upgrade when clicked */
-            onClick={buyGlobalCheeseEnterprise}
-            /* Disable the button if the player doesn't have enough cheese */
-            disabled={cheeseCount < getGlobalCheeseEnterpriseCost()}
-          >
-            <div className="upgrade-details">
-              <span className="upgrade-name">Cheese Enterprise</span>
-              <span className="upgrade-level">Level {globalCheeseEnterpriseLevel}</span>
-              <span className="upgrade-cost">{formatNumber(getGlobalCheeseEnterpriseCost())} 🧀</span>
-            </div>
-          </button>
-          <button
-            className="upgrade-button text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl"
-            /* Buy the galactic cheese conglomerate upgrade when clicked */
-            onClick={buyGalacticCheeseConglomerate}
-            /* Disable the button if the player doesn't have enough cheese */
-            disabled={cheeseCount < getGalacticCheeseConglomerateCost()}
-          >
-            <div className="upgrade-details">
-              <span className="upgrade-name">Galactic Cheese</span>
-              <span className="upgrade-level">Level {galacticCheeseConglomerateLevel}</span>
-              <span className="upgrade-cost">{formatNumber(getGalacticCheeseConglomerateCost())} 🧀</span>
-            </div>
-          </button>
-          <button
-            className="upgrade-button text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl"
-            /* Buy the galactic cheese conglomerate upgrade when clicked */
-            onClick={buyCheeseGod}
-            /* Disable the button if the player doesn't have enough cheese */
-            disabled={cheeseCount < getCheeseGodCost()}
-          >
-            <div className="upgrade-details">
-              <span className="upgrade-name">Cheese GOD</span>
-              <span className="upgrade-level">Level {cheeseGodLevel}</span>
-              <span className="upgrade-cost">{formatNumber(getCheeseGodCost())} 🧀</span>
-            </div>
-          </button>
-        </div>
-        <div className="App-content">
-          {/* Header section */}
-          <header className="App-header w-full">
-            {/* Sidebar (purchases) button */}
-            <div className="button-column fixed top-5 left-5 z-50 flex flex-col">
-              <button className={`toggle-button fixed top-5 ${sideBarVisible ? 'left-60' : 'left-5'} z-50`} 
-                      /* Toggle the sidebar visibility when clicked */
-                      onClick={toggleSideBar}>
-                      {/* Upgrades icon that reveals sidebar */}
-                      <img src={upgradesIcon} alt="Upgrades" className={`w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-18 lg:h-18 xl:w-20 xl:h-20 ${shouldHightlight ? 'highlight' : ''}`}/>
-              </button>
-              <button className={`save-button fixed top-5 ${sideBarVisible ? 'left-60' : 'left-5'} z-50`} 
-                      onClick={saveGame}>
-                      <img src={saveIcon} alt="Save" className={`w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 lg:w-15 lg:h-15 xl:w-18 xl:h-18`}/>
-              </button>
-              <button className={`settings-button fixed top-5 ${sideBarVisible ? 'left-60' : 'left-5'} z-50`}
-                      onClick={toggleSettings}>
-                      <img src={settingsIcon} alt="Settings" className={`w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 lg:w-15 lg:h-15 xl:w-18 xl:h-18`}/>
-              </button>
-              <button className={`info-button fixed top-5 ${sideBarVisible ? 'left-60' : 'left-5'} z-50`}
-                      onClick={toggleInfo}>
-                      <img src={infoIcon} alt="Info" className={`w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 xl:w-18 xl:h-18`}/>
-              </button>
-            </div>
-            {/* Title of the game */}
-            <h1 className="cheese-title">Cheese Clicker</h1>
-            {/* Cheese container/image */}
-            <div className="cheese-container mt-4" onClick={handleClick}>
-              <img src={cheeseImage} alt="Cheese" className="cheese-image w-64 h-64 sm:w-64 sm:h-64 md:w-64 m:h-64 lg:w-64 lg:h-64 xl:w-64 xl:h-64" />
-            </div>
-            {/* Cheese count */}
-            <p className="cheese-count text-4xl sm:text-5xl md:text-5xl lg:text-5xl mt-4">🧀 {formatCheeseCount(cheeseCount)}</p>
-            {/* Cheese stats */}
-            <div className="cheese-stats flex items-center text-xl sm:text-2xl md:text-2xl lg:text-2xl xl:text-2xl">
-              <p className="cheese-per-click flex items-center text-xl sm:text-xl md:text-2xl lg:text-2xl xl:text-2xl">CHeeSE PER CLICK: {cheesePerClick}</p>
-              <p className="cheese-per-second ml-0 md:ml-5 flex items-center text-xl sm:text-xl md:text-2xl lg:text-2xl xl:text-2xl">CHeeSe PeR SeCoND: {getCheesePerSecond().toFixed(1)}</p>
-            </div>
-            {/* Popup message */}
-            {popupMessage && <div key={popupKey} className="popup-message">{popupMessage}</div>}
-            {showSaveNotification && <div className="save-notification">Game saved!</div>}
-          </header>
-        </div>
-        {settingsVisible && (
-          <div className="settings-modal">
-            <h2>Settings</h2>
-            <button className="close-button" onClick={toggleSettings}>X</button>
-            <div className="volume-slider-container">
-              <label htmlFor="volume-slider">MUSIC VOLUME</label>
-              <input
-                type="range"
-                id="volume-slider"
-                className="volume-slider"
-                min="0"
-                max="100"
-                value={volume}
-                onChange={handleVolumeChange}
-              />
-              <button
-                className="restart-button mt-4"
-                onClick={restartGame}
-              >
-                RESTART GAME
-              </button>
-              <button
-                className={`autosave-button mt-4 ${isAutoSaveEnabled ? 'enabled' : 'disabled'}`}
-                onClick={() => setIsAutoSaveEnabled(!isAutoSaveEnabled)}
-              >
-                AUTOSAVE: {isAutoSaveEnabled ? 'ON' : 'OFF'}
-              </button>
-                {showAutosavePopup && <div className="autosave-popup">Autosaves every 5 seconds!</div>}
-            </div>
-          </div>
-        )}
-        {infoVisible && (
-              <div className="info-modal">
-                <h2>INFORMATION</h2>
-                <button className="close-button" onClick={toggleInfo}>X</button>
-                <p>Welcome to <span className="h3">Cheese Clicker !</span> Click the cheese to earn! Spend your cheese on upgrades to earn more cheese per click and per second. Have fun!
-                This game is a fun project created to demonstrate skills in web development.</p>
-                <h3>Tools and skills Used</h3>
-                <ul>
-                  <li><span className="glow-effect">HTML | CSS | JavaScript | React | Local Storage | Audio | Animations</span></li>
-                </ul>
-                <h3>Links</h3>
-                <ul>
-                  <li><a href="https://github.com/hishamissa" target="_blank">GitHub</a></li>
-                  <li><a href="https://www.hishamissa.com" target="_blank">My Personal Website</a></li>
-                  <li><a href="https://www.linkedin.com/in/hisham-issaa/" target="_blank">LinkedIn</a></li>
-                </ul>
-                <p2>Developed, designed and implemented by Hisham Issa. Hisham Issa 2024 All rights reserved.</p2>
-              </div>
-            )}
-    </div>
+    <AppContent 
+      cheeseCount={cheeseCount}
+      cheesePerClick={cheesePerClick}
+      getCheesePerSecond={getCheesePerSecond}
+      buyCheeseCutter={buyCheeseCutter}
+      getCheeseCutterCost={getCheeseCutterCost}
+      cheeseCutterLevel={cheeseCutterLevel}
+      buyDairyCow={buyDairyCow}
+      getDairyCowCost={getDairyCowCost}
+      dairyCowLevel={dairyCowLevel}
+      buyCheeseMaker={buyCheeseMaker}
+      getCheeseMakerCost={getCheeseMakerCost}
+      cheeseMakerLevel={cheeseMakerLevel}
+      buyCheeseFactory={buyCheeseFactory}
+      getCheeseFactoryCost={getCheeseFactoryCost}
+      cheeseFactoryLevel={cheeseFactoryLevel}
+      buyArtisanCheeseMaker={buyArtisanCheeseMaker}
+      getArtisanCheeseMakerCost={getArtisanCheeseMakerCost}
+      artisanCheeseMakerLevel={artisanCheeseMakerLevel}
+      buyCheeseShop={buyCheeseShop}
+      getCheeseShopCost={getCheeseShopCost}
+      cheeseShopLevel={cheeseShopLevel}
+      buyCheeseExporter={buyCheeseExporter}
+      getCheeseExporterCost={getCheeseExporterCost}
+      cheeseExporterLevel={cheeseExporterLevel}
+      buyCheeseResearchLab={buyCheeseResearchLab}
+      getCheeseResearchLabCost={getCheeseResearchLabCost}
+      cheeseResearchLabLevel={cheeseResearchLabLevel}
+      buyCheeseCorporation={buyCheeseCorporation}
+      getCheeseCorporationCost={getCheeseCorporationCost}
+      cheeseCorporationLevel={cheeseCorporationLevel}
+      buyGlobalCheeseEnterprise={buyGlobalCheeseEnterprise}
+      getGlobalCheeseEnterpriseCost={getGlobalCheeseEnterpriseCost}
+      globalCheeseEnterpriseLevel={globalCheeseEnterpriseLevel}
+      buyGalacticCheeseConglomerate={buyGalacticCheeseConglomerate}
+      getGalacticCheeseConglomerateCost={getGalacticCheeseConglomerateCost}
+      galacticCheeseConglomerateLevel={galacticCheeseConglomerateLevel}
+      buyCheeseGod={buyCheeseGod}
+      getCheeseGodCost={getCheeseGodCost}
+      cheeseGodLevel={cheeseGodLevel}
+      formatCheeseCount={formatCheeseCount}
+      popupMessage={popupMessage}
+      popupKey={popupKey}
+      showSaveNotification={showSaveNotification}
+      sideBarVisible={sideBarVisible}
+      shouldHightlight={shouldHightlight}
+      toggleSideBar={toggleSideBar}
+      saveGame={saveGame}
+      toggleSettings={toggleSettings}
+      settingsVisible={settingsVisible}
+      handleVolumeChange={handleVolumeChange}
+      volume={volume}
+      restartGame={restartGame}
+      isAutoSaveEnabled={isAutoSaveEnabled}
+      setIsAutoSaveEnabled={setIsAutoSaveEnabled}
+      showAutosavePopup={showAutosavePopup}
+      toggleInfo={toggleInfo}
+      infoVisible={infoVisible}
+      handleClick={handleClick}
+      formatNumber={formatNumber}
+    />
   );
 }
 
