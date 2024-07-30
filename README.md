@@ -1,13 +1,11 @@
 <!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 -->
 <a id="readme-top"></a>
 
-[![LinkedIn][linkedin-shield]][linkedin-url]
-
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
   <a href="https://github.com/hishamissa/clicker-game">
-    <img src="public/cheese-logo.png" alt="Logo" width="80" height="80">
+    <img src="public/cheese-logo.png" alt="Logo" width="240" height="240">
   </a>
 
 <h3 align="center">Cheese Clicker</h3>
@@ -15,7 +13,8 @@
   <p align="center">
     Cheese Clicker is an addicting incremental/clicker game where you click on a cheese icon to earn cheese. Use your cheese to purchase upgrades and automate cheese production. The goal is to maximize your cheese count through strategic upgrades and enjoy the fun progression system.
     <br />
-    <a href="https://github.com/hishamissa/clicker-game"><strong>Visit my Profile! »</strong></a>
+    <br />
+    <a href="https://hishamissa.github.io/clicker-game/"><strong>Click Here to Play Cheese Clicker! »</strong></a>
     <br />
     <br />
   </p>
@@ -33,19 +32,9 @@
         <li><a href="#built-with">Built With</a></li>
       </ul>
     </li>
-    <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
-      </ul>
-    </li>
     <li><a href="#usage">Usage</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
 
@@ -65,7 +54,7 @@ Welcome to Cheese Clicker! Click the cheese to earn. Spend your cheese on upgrad
 ### Built With
 
 [![React][React.js]][React-url]
-(https://skillicons.dev/icons?i=js,html,css,wasm)](https://skillicons.dev)
+[![My Skills](https://skillicons.dev/icons?i=js,html,css,wasm)](https://skillicons.dev)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
