@@ -1,13 +1,6 @@
 <!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 -->
 <a id="readme-top"></a>
 
-<!-- PROJECT LOGO -->
-<br />
-<div align="center">
-  <a href="https://github.com/hishamissa/clicker-game">
-    <img src="public/cheese-logo.png" alt="Logo" width="240" height="240">
-  </a>
-
 <h3 align="center">Cheese Clicker</h3>
 
   <p align="center">
@@ -54,7 +47,12 @@ Welcome to Cheese Clicker! Click the cheese to earn. Spend your cheese on upgrad
 ### Built With
 
 [![React][React.js]][React-url]
-[![My Skills](https://skillicons.dev/icons?i=js,html,css,wasm)](https://skillicons.dev)
+[![My Skills](https://skillicons.dev/icons?i=js,html,css,react,github,vscode)](https://skillicons.dev)
+<p align="center">
+  <a href="https://skillicons.dev">
+    <img src="https://skillicons.dev/icons?i=js,html,css,react,github,vscode" />
+  </a>
+</p>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -99,8 +97,8 @@ Gameplay involes...
 <!-- CONTACT -->
 ## Contact
 
-Hisham Issa - hishamissaa@gmail.com
-
+Hisham Issa: hishamissaa@gmail.com
+LinkedIn: https://www.linkedin.com/in/hisham-issaa/
 Project Link: [https://github.com/hishamissa/clicker-game](https://github.com/hishamissa/clicker-game)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
