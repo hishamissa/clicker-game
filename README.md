@@ -1,42 +1,81 @@
-# Cheese Clicker
+<!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 -->
+<a id="readme-top"></a>
 
----
+[![LinkedIn][linkedin-shield]][linkedin-url]
 
+<!-- PROJECT LOGO -->
+<br />
 <div align="center">
-  <a href="https://hishamissa.github.io/clicker-game/" target="_blank" style="color: orange; font-weight: bold; font-size: 1.5em;">Play Cheese Clicker Now!</a>
+  <a href="https://github.com/hishamissa/clicker-game">
+    <img src="public/cheese-logo.png" alt="Logo" width="80" height="80">
+  </a>
+
+<h3 align="center">Cheese Clicker</h3>
+
+  <p align="center">
+    Cheese Clicker is an addicting incremental/clicker game where you click on a cheese icon to earn cheese. Use your cheese to purchase upgrades and automate cheese production. The goal is to maximize your cheese count through strategic upgrades and enjoy the fun progression system.
+    <br />
+    <a href="https://github.com/hishamissa/clicker-game"><strong>Visit my Profile! »</strong></a>
+    <br />
+    <br />
+  </p>
 </div>
 
----
 
-## Table of Contents
-1. [Concept](#concept)
-2. [Themes](#themes)
-3. [Design Choices](#design-choices)
-4. [Features](#features)
-5. [Gameplay](#gameplay)
-6. [Upgrades](#upgrades)
-7. [Technologies Used](#technologies-used)
-8. [Skills Needed](#skills-needed)
-9. [What I Learned](#what-i-learned)
-10. [Future Improvements](#future-improvements)
 
----
+<!-- TABLE OF CONTENTS -->
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+      <ul>
+        <li><a href="#built-with">Built With</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation">Installation</a></li>
+      </ul>
+    </li>
+    <li><a href="#usage">Usage</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#license">License</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#acknowledgments">Acknowledgments</a></li>
+  </ol>
+</details>
 
-## Concept
-**Cheese Clicker** is an addicting incremental/clicker game where you click on a cheese icon to earn cheese. Use your cheese to purchase upgrades and automate cheese production. The goal is to maximize your cheese count through strategic upgrades and enjoy the fun progression system.
 
-## Themes
-- **Cheese Madness**: Dive into a world of cheese obsession where everything revolves around cheese.
-- **Fun and Addictive**: Designed to keep players engaged with constant upgrades and new goals.
-- **Visually Appealing**: Bright colors, smooth animations, and an engaging user interface.
 
-## Design Choices
-- **Cheese Theme**: All elements are designed around cheese, from the icons to the background color scheme.
-- **Responsive Design**: Ensuring the game looks great and is playable on all device sizes.
-- **Interactive Background**: A dynamic, color-shifting background keeps the visual experience fresh.
-- **Animations**: Smooth transitions and bouncy effects make the game lively and fun.
+<!-- ABOUT THE PROJECT -->
+## About The Project
 
-## Features
+![Screenshot 2024-07-30 at 12 00 05 PM](https://github.com/user-attachments/assets/d960189d-c68e-4777-81bb-ac75a3ed9769)
+
+Welcome to Cheese Clicker! Click the cheese to earn. Spend your cheese on upgrades to earn more cheese per click and cheese per second. Have fun! This game is a fun personal project created to demonstrate and improve my skills in web development!.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+### Built With
+
+[![React][React.js]][React-url]
+(https://skillicons.dev/icons?i=js,html,css,wasm)](https://skillicons.dev)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+<!-- USAGE EXAMPLES -->
+## Usage
+
+You simply click the cheese and earn 1 piece of cheese. As you click, and your cheese count grow, upgrades become available to increase your total cheese expontentially. Eventually you can become the cheese GOD.
+
+Features include: 
 - **Click to Earn Cheese**: Simple and intuitive primary mechanic.
 - **Upgrades**: A variety of upgrades to boost your cheese production.
 - **Save and Load Game**: Save your progress and pick up where you left off.
@@ -44,7 +83,7 @@
 - **Information Modal**: Provides information about the game and links to developer profiles.
 - **Audio Effects**: Enjoy engaging sound effects and background music.
 
-## Gameplay
+Gameplay involes...
 1. **Click the Cheese**: Click on the cheese icon to earn cheese.
 2. **Buy Upgrades**: Use your cheese to purchase upgrades that increase your cheese production.
 3. **Strategize**: Balance between upgrades that increase cheese per click and those that increase cheese per second.
@@ -52,50 +91,34 @@
 5. **Autosave**: Enable autosave to automatically save your progress every 5 minutes.
 6. **Restart Game**: Reset your game whenever you want to start fresh.
 
-## Upgrades
-- **Cheese Cutter**: Increases cheese per click.
-- **Dairy Cow**: Increases cheese per second.
-- **Cheese Maker**: Further boosts cheese production per second.
-- **Cheese Factory**: Significantly increases cheese per second.
-- **Artisan Cheese Maker**: High-end upgrade for cheese production.
-- **Cheese Shop**: Even more cheese per second.
-- **Cheese Exporter**: Export cheese for massive gains.
-- **Cheese Research Lab**: Research for optimal cheese production.
-- **Cheese Corporation**: Turn your cheese business into a corporation.
-- **Global Cheese Enterprise**: Expand your cheese empire globally.
-- **Galactic Cheese Conglomerate**: Take your cheese production to space.
-- **Cheese God**: Achieve divine levels of cheese production.
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## Technologies Used
-- **React**: For building the user interface.
-- **JavaScript**: Core language for functionality.
-- **CSS**: Styling the application.
-- **HTML**: Basic structure.
-- **Local Storage**: Saving game progress.
-- **Audio**: Adding sound effects and music.
-- **Animations**: Using CSS for visual effects.
 
-## Skills Needed
-- **React and JavaScript**: Proficiency in building and managing components.
-- **CSS**: Knowledge of styling and animations.
-- **HTML**: Understanding of structuring web content.
-- **State Management**: Handling application state effectively.
-- **Local Storage**: Managing data persistence.
 
-## What I Learned
-- **React Hooks**: Utilizing `useState` and `useEffect` for state and side effects.
-- **Component-based Architecture**: Organizing code into reusable components.
-- **CSS Animations**: Creating engaging user experiences with CSS.
-- **Audio Integration**: Adding and controlling sound effects in a web application.
-- **Local Storage**: Implementing persistent data storage.
+<!-- ROADMAP -->
+## Roadmap
 
-## Future Improvements
-- **More Upgrades**: Adding new and exciting upgrades.
-- **Achievements**: Introducing achievements and milestones.
-- **Leaderboard**: Adding a global leaderboard to compare scores.
-- **Multiplayer**: Enabling multiplayer features for competitive gameplay.
-- **Enhanced Graphics**: Improving visual elements for a more polished look.
+- [x] Autosave
+- [x] More Upgrades
+- [ ] Achievements
+- [ ] Leaderboard
+    - [ ] Multiplayer
+- [ ] Enhanced Graphics
 
----
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-Enjoy playing **Cheese Clicker** and get ready to dive into the world of cheese! Keep clicking, upgrading, and having fun!
+<!-- CONTACT -->
+## Contact
+
+Hisham Issa - hishamissaa@gmail.com
+
+Project Link: [https://github.com/hishamissa/clicker-game](https://github.com/hishamissa/clicker-game)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+<!-- MARKDOWN LINKS & IMAGES -->
+[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
+[linkedin-url]: https://linkedin.com/in/hisham-issaa
+[React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
+[React-url]: https://reactjs.org/
