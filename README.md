@@ -46,8 +46,6 @@ Welcome to Cheese Clicker! Click the cheese to earn. Spend your cheese on upgrad
 
 ### Built With
 
-[![React][React.js]][React-url]
-[![My Skills](https://skillicons.dev/icons?i=js,html,css,react,github,vscode)](https://skillicons.dev)
 <p align="center">
   <a href="https://skillicons.dev">
     <img src="https://skillicons.dev/icons?i=js,html,css,react,github,vscode" />
