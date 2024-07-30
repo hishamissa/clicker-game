@@ -1,7 +1,7 @@
 <!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 -->
 <a id="readme-top"></a>
 
-<h3 align="center"><font size="48">Cheese Clicker</font></h3>
+<h3 align="center" style="font-size:20px">Cheese Clicker</h3>
 
   <p align="center">
     Cheese Clicker is an addicting incremental/clicker game where you click on a cheese icon to earn cheese. Use your cheese to purchase upgrades and automate cheese production. The goal is to maximize your cheese count through strategic upgrades and enjoy the fun progression system.
